@@ -33,7 +33,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user, status: :ok
     else
-
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -42,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: :user
+    render json: @user
   end
 
   private
