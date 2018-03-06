@@ -1,0 +1,243 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-03-06T08:46:08.189Z",
+	"__export_source": "insomnia.desktop.app:v5.14.9",
+	"resources": [
+		{
+			"_id": "wrk_1758c6ccd596493babd9364f31938f97",
+			"created": 1520263826522,
+			"description": "",
+			"modified": 1520263826522,
+			"name": "Insomnia",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_3601bb8c7ab24b1a802f8fec1fb28d2e",
+			"color": null,
+			"created": 1520263826553,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1520263826553,
+			"name": "New Environment",
+			"parentId": "wrk_1758c6ccd596493babd9364f31938f97",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_67575befa2594cc395b9ff3ad7fb9f48",
+			"cookies": [
+				{
+					"creation": "2018-03-05T15:33:21.561Z",
+					"domain": "www.grandparissud-dev.fr",
+					"expires": "1970-01-01T00:00:00.000Z",
+					"hostOnly": true,
+					"id": "487829581021465",
+					"key": "sortir_locale",
+					"lastAccessed": "2018-03-05T15:35:36.470Z",
+					"maxAge": 0,
+					"path": "/"
+				},
+				{
+					"creation": "2018-03-06T08:32:29.304Z",
+					"domain": "localhost",
+					"hostOnly": true,
+					"httpOnly": true,
+					"id": "9293204744859882",
+					"key": "_liveup_session",
+					"lastAccessed": "2018-03-06T08:43:42.467Z",
+					"path": "/",
+					"value": "MUhGSDlWSlN6dGFkNGxzTVhJK2RPNllmdVg5K0tVRlB5cmVkemtYUzFaZmh5TUpZckxjUTR3eTdlRnJadi94d3Jub1VrNlFXQkV6Mk5QRzc3bVd5cTROQnp2VGVsQ1RlMlNhTVJCWEpPYkE9LS16SmtyZC9GT2djUHZkNlNyb05qV2ZnPT0%3D--c10b46998fff33b84095ac7c674c35c276bfd66a"
+				}
+			],
+			"created": 1520263826613,
+			"modified": 1520325822468,
+			"name": "Default Jar",
+			"parentId": "wrk_1758c6ccd596493babd9364f31938f97",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"created": 1520324002551,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1520324002551,
+			"modified": 1520324002551,
+			"name": "users",
+			"parentId": "wrk_1758c6ccd596493babd9364f31938f97",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_8701ec22e192498695578047dedc2dde",
+			"authentication": {
+				"callback": "",
+				"consumerKey": "",
+				"consumerSecret": "",
+				"disabled": false,
+				"nonce": "",
+				"privateKey": "",
+				"signatureMethod": "HMAC-SHA1",
+				"timestamp": "",
+				"tokenKey": "",
+				"tokenSecret": "",
+				"type": "oauth1",
+				"version": "1.0"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"salut@gmail.com\",\n\t\t\"password\": \"salutcmartin\"\n\t}\n}"
+			},
+			"created": 1520323165542,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_c96694960ea04b1eab45dacb7bc15c07",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520324065504,
+			"method": "POST",
+			"modified": 1520324087499,
+			"name": "sign up",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users",
+			"_type": "request"
+		},
+		{
+			"_id": "req_87c7ec84106d49d2b0c8a6e8c32cb421",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"salxdut@gmail.com\",\n\t\t\"password\": \"coucoulol\"\n\t}\n}"
+			},
+			"created": 1520323894307,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_93777147ffb64caab3359af073d3ad01",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520324065479,
+			"method": "POST",
+			"modified": 1520325799290,
+			"name": "sign in",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users/login",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6b81d700d2264ed8a52e70dcef08cd04",
+			"authentication": {
+				"grantType": "authorization_code",
+				"type": "oauth2"
+			},
+			"body": {},
+			"created": 1520324065454,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1520324065454,
+			"method": "GET",
+			"modified": 1520324105783,
+			"name": "index",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3dc67f9497c6453793a98229bd334633",
+			"authentication": {
+				"grantType": "authorization_code",
+				"type": "oauth2"
+			},
+			"body": {},
+			"created": 1520324237455,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1520324065404,
+			"method": "GET",
+			"modified": 1520324272121,
+			"name": "show",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users/1",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4e7d41663c814c1994c1bc5c693f011b",
+			"authentication": {
+				"grantType": "authorization_code",
+				"type": "oauth2"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"salxdut@gmail.com\",\n\t\t\"password\": \"coucoulol\"\n\t}\n}"
+			},
+			"created": 1520324324906,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_11df57f6d16548288adda33215e61f45",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520324065354,
+			"method": "PUT",
+			"modified": 1520325556986,
+			"name": "update",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users/6",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f801c546793e4bc3bc3c21e547b5b925",
+			"authentication": {
+				"grantType": "authorization_code",
+				"type": "oauth2"
+			},
+			"body": {},
+			"created": 1520325662778,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1520324065304,
+			"method": "DELETE",
+			"modified": 1520325815288,
+			"name": "destroy",
+			"parameters": [],
+			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "localhost:3000/api/v1/users/6",
+			"_type": "request"
+		}
+	]
+}
