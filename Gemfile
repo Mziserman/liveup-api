@@ -24,6 +24,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'pry-byebug'
   gem 'web-console', '>= 3.3.0'
   gem 'pry'
   gem 'listen', '>= 3.0.5', '< 3.2'
