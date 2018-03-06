@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-03-06T08:46:08.189Z",
+	"__export_date": "2018-03-06T08:55:58.025Z",
 	"__export_source": "insomnia.desktop.app:v5.14.9",
 	"resources": [
 		{
@@ -32,7 +32,7 @@
 					"domain": "www.grandparissud-dev.fr",
 					"expires": "1970-01-01T00:00:00.000Z",
 					"hostOnly": true,
-					"id": "487829581021465",
+					"id": "9190236779857297",
 					"key": "sortir_locale",
 					"lastAccessed": "2018-03-05T15:35:36.470Z",
 					"maxAge": 0,
@@ -43,15 +43,15 @@
 					"domain": "localhost",
 					"hostOnly": true,
 					"httpOnly": true,
-					"id": "9293204744859882",
+					"id": "6973969294283042",
 					"key": "_liveup_session",
-					"lastAccessed": "2018-03-06T08:43:42.467Z",
+					"lastAccessed": "2018-03-06T08:55:12.464Z",
 					"path": "/",
-					"value": "MUhGSDlWSlN6dGFkNGxzTVhJK2RPNllmdVg5K0tVRlB5cmVkemtYUzFaZmh5TUpZckxjUTR3eTdlRnJadi94d3Jub1VrNlFXQkV6Mk5QRzc3bVd5cTROQnp2VGVsQ1RlMlNhTVJCWEpPYkE9LS16SmtyZC9GT2djUHZkNlNyb05qV2ZnPT0%3D--c10b46998fff33b84095ac7c674c35c276bfd66a"
+					"value": "UzVvZHVxNlpMektIS3VKQmIwSmlveGJhYlprSUVWbmdZVWZxeEhjVndxN0FveUZOemppK0lvMUVoZ2ZnNGVUVUJad1dLVWE2STJ0SUZFaUNzR1NHbWVHWmpTdmQvZ21jYmFyRGhtZ2kxbTA9LS1WdkhqK3huZHNmSkVRTmh3c3RRa0VRPT0%3D--2051fbab7b45a7023264a8b8bae77a9bec86803f"
 				}
 			],
 			"created": 1520263826613,
-			"modified": 1520325822468,
+			"modified": 1520326512464,
 			"name": "Default Jar",
 			"parentId": "wrk_1758c6ccd596493babd9364f31938f97",
 			"_type": "cookie_jar"
@@ -114,7 +114,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"user\": {\n\t\t\"email\": \"salxdut@gmail.com\",\n\t\t\"password\": \"coucoulol\"\n\t}\n}"
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"salut@gmail.com\",\n\t\t\"password\": \"salutcmartin\"\n\t}\n}"
 			},
 			"created": 1520323894307,
 			"description": "",
@@ -127,7 +127,7 @@
 			],
 			"metaSortKey": -1520324065479,
 			"method": "POST",
-			"modified": 1520325799290,
+			"modified": 1520326511250,
 			"name": "sign in",
 			"parameters": [],
 			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
@@ -135,7 +135,7 @@
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "localhost:3000/api/v1/users/login",
+			"url": "localhost:3000/api/v1/users/sign_in",
 			"_type": "request"
 		},
 		{
@@ -205,7 +205,7 @@
 			],
 			"metaSortKey": -1520324065354,
 			"method": "PUT",
-			"modified": 1520325556986,
+			"modified": 1520326205713,
 			"name": "update",
 			"parameters": [],
 			"parentId": "fld_939d00d43f0848d89b27f8fefd2ae9a8",
@@ -213,7 +213,7 @@
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "localhost:3000/api/v1/users/6",
+			"url": "localhost:3000/api/v1/users/7",
 			"_type": "request"
 		},
 		{
