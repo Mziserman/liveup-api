@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
       raise UnauthorizedError
     end
 
-    User.find(auth_token[:user_id])
+    @current_user = User.find(auth_token[:user_id])
   end
 
   protected
