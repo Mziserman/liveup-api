@@ -14,10 +14,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def index
-    @users = User.all
-  end
-
   def create
     @user = User.new(user_params)
     if @user.save
@@ -29,16 +25,31 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def index
+    @users = User.all
+    render json: @users,
+      status: :ok
+  end
+
   def update
+    if !@current_user == @user
+      head :unauthorized
+    end
+
     if @user.update(user_params)
       render json: @user, status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, head: :unprocessable_entity
     end
   end
 
   def destroy
+    if !@current_user == @user
+      return render json: [], status: :unauthorized
+    end
+
     @user.destroy
+    head :no_content
   end
 
   def show
@@ -46,6 +57,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+
   def sign_in_params
     params.require(:user).permit(
       :email,
