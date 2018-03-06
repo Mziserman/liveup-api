@@ -6,6 +6,8 @@ Rails.application.routes.draw do
         post 'sign_in', on: :collection
       end
 
+      resources :streams, only: [:index, :create, :show, :update, :destroy]
+
     end
   end
 end
