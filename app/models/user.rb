@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :stripe_plan
+  has_many :streams
+
+  has_many :subscriptions
+  has_many :subscribed_to, through: :subscriptions, source: :stream
 end
