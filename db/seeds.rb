@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
+stream = streamer.streams.create()
+
+subscriber = User.create(email: "subscriber@gmail.com", password: "salutcsubscriber")
+subscription = stream.subscriptions.create(stream: stream, user: subscriber)
