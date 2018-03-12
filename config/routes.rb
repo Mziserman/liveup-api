@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
       resources :streams, only: [:index, :create, :show, :update, :destroy]
 
+      resources :sub, only: [:index, :create, :show, :update, :destroy]      
+
     end
   end
 end

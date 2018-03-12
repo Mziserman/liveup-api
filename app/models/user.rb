@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_one :stripe_plan
+  has_many :stripe_products
   has_many :streams
 
   has_many :subscriptions
