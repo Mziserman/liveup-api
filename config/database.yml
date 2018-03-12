@@ -8,8 +8,9 @@ default: &default
   adapter: postgresql
   encoding: utf8
   pool: 5
-  username:
+  username: postgres
   password:
+  host: postgres
 
 development:
   <<: *default
