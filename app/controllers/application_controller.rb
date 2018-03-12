@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def auth_token
-    @auth_token ||= JsonWebToken.decode(http_token)
+    @auth_token ||= ::JsonWebToken.decode(http_token)
   end
 
   def expired(payload)

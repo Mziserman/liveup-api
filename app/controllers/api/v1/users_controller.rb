@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.present? && @user.valid_password?(sign_in_params[:password])
       render json: @user,
         serializer: Api::V1::UserSerializer,
-        token: JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
+        token: ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
     else
       render status: :error
     end
@@ -69,8 +69,9 @@ class Api::V1::UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
-      :first_name,
-      :last_name)
+      # :first_name,
+      # :last_name
+      )
   end
 
   def set_user
