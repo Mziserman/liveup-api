@@ -1,24 +1,45 @@
-# README
+# Liveup Api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
+> Install dependencies
 
-Things you may want to cover:
+```
+bundle install
+```
+> To setup your database ( only if new )
 
-* Ruby version
+```
+rake db:setup
+```
+> Migrate any changes to the database
 
-* System dependencies
+```
+rake db:migrate
+```
 
-* Configuration
+## Commands
+> Start the server
 
-* Database creation
+```
+bundle exec rails s -p 3000 -b '0.0.0.0'
+```
 
-* Database initialization
+## Docker
+> Start the docker
 
-* How to run the test suite
+```
+# The -d option puts it in the background - optional
+docker-compose -p liveup up -d
+```
+> Access the rails app ( while is up )
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+# Only use it to run commands,
+# if you want to modify files, do it in your folder !
+docker-compose -p liveup exec web bash
+```
 
-* Deployment instructions
 
-* ...
+### Notes :
+- The database is mounted on the `/tmp/db` folder
+- The app in `docker` and in your `folder` are the **same**
