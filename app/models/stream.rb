@@ -1,6 +1,6 @@
 class Stream < ApplicationRecord
-  has_one :user, as: :streamer
+  belongs_to :streamer, foreign_key: :user_id, class_name: "User"
 
-  has_many :subscriptions
-  has_many :subscribers, through: :subscriptions, source: :user
+  has_many :follows
+  has_many :followers, through: :follows, source: :user
 end
