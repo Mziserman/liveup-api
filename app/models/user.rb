@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :stripe_products
   has_many :streams
 
-  has_many :subscriptions
-  has_many :subscribed_to, through: :subscriptions, source: :stream
+  has_many :follows
+  has_many :followed_streams, through: :follows, source: :stream
+  has_many :followed_streamers, through: :followed_streams, source: :streamer
 end
