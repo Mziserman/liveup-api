@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_request!
     if !user_id_in_token? && !expired(auth_token)
-      raise UnauthorizedError
+      return head :unauthorized
     end
 
     @current_user = User.find(auth_token[:user_id])
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def expired(payload)
-    payload[:exp].present? && Time.at(payload[:exp]) > Time.now
+    payload&[:exp].present? && Time.at(payload&[:exp]) > Time.now
   end
 
   # def set_raven_context

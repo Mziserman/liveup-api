@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_request!, except: [:sign_in, :create]
+  before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def sign_in
@@ -10,7 +11,7 @@ class Api::V1::UsersController < ApplicationController
         serializer: Api::V1::UserSerializer,
         token: JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
     else
-      render status: :error
+      render [], status: :unauthorized
     end
   end
 
@@ -21,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
         status: :created
     else
       render json: @user.errors,
-        status: :unauthorized
+        status: :bad_request
     end
   end
 
@@ -32,22 +33,16 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    if !@current_user == @user
-      head :unauthorized
-    end
-
     if @user.update(user_params)
-      render json: @user, status: :ok
+      render json: @user,
+        status: :ok
     else
-      render json: @user.errors, head: :unprocessable_entity
+      render json: @user.errors,
+        status: :bad_request
     end
   end
 
   def destroy
-    if !@current_user == @user
-      return render json: [], status: :unauthorized
-    end
-
     @user.destroy
     head :no_content
   end
@@ -75,6 +70,12 @@ class Api::V1::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def authorize_user!
+    if @current_user != @user
+      return head :unauthorized
+    end
   end
 
 end

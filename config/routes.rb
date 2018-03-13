@@ -6,7 +6,10 @@ Rails.application.routes.draw do
         post 'sign_in', on: :collection
       end
 
-      resources :streams, only: [:index, :create, :show, :update, :destroy]
+      resources :streams, only: [:index, :create, :show, :update, :destroy] do
+        post ':id/follow', on: :collection, action: :follow
+      end
+      # resources :follows, only: [:index, :create, :destroy]
 
     end
   end
