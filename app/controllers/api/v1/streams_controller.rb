@@ -3,14 +3,14 @@ class Api::V1::StreamsController < ApplicationController
   before_action :authorize_user!, except: [:index, :create, :show, :follow]
   before_action :set_stream, only: [:show, :edit, :update, :destroy, :follow]
 
-  api :GET, '/v1/streams'
+  api :GET, '/v1/streams', 'List streams'
   def index
     @streams = Stream.all
     render json: @streams,
       status: :ok
   end
 
-  api :POST, '/v1/streams'
+  api :POST, '/v1/streams', 'Create stream'
   def create
     opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
     session = opentok.create_session
@@ -25,8 +25,8 @@ class Api::V1::StreamsController < ApplicationController
     end
   end
 
-  api :GET, '/v1/streams/:id'
-  param :id, Integer
+  api :GET, '/v1/streams/:id', 'Show stream'
+  param :id, Integer, 'Stream id'
   def show
     @stream = Stream.find(params[:id])
 
@@ -34,8 +34,8 @@ class Api::V1::StreamsController < ApplicationController
       status: :ok
   end
 
-  api :PUT, '/v1/streams/:id'
-  param :id, Integer
+  api :PUT, '/v1/streams/:id', 'Update stream'
+  param :id, Integer, 'Stream id'
   def update
     @stream = Stream.find(params[:id])
     if @stream.update(stream_params)
@@ -47,8 +47,8 @@ class Api::V1::StreamsController < ApplicationController
     end
   end
 
-  api :DELETE, '/v1/streams/:id'
-  param :id, Integer
+  api :DELETE, '/v1/streams/:id', 'Delete stream'
+  param :id, Integer, 'Stream id'
   def destroy
     @stream.destroy
     head :no_content

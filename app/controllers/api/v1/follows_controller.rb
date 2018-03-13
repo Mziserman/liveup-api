@@ -3,9 +3,13 @@ class Api::V1::FollowsController < ApplicationController
   before_action :authorize_user!, only: :destroy
   before_action :set_stream
 
+  # resource_description do
+  #   short 'test'
+  # end
 
-  api :POST, '/v1/streams/:stream_id/follows'
-  param :stream_id, Integer
+
+  api :POST, '/v1/streams/:stream_id/follows', 'Follow streamer'
+  param :stream_id, Integer, 'Stream id'
   def create
     @follow = Follow.find_or_initialize_by(user: @current_user, stream: @stream)
     if @follow.save
@@ -18,8 +22,8 @@ class Api::V1::FollowsController < ApplicationController
   end
 
 
-  api :DELETE, '/v1/streams/:stream_id/follows'
-  param :stream_id, Integer
+  api :DELETE, '/v1/streams/:stream_id/follows', 'Unfollow streamer'
+  param :stream_id, Integer, 'Stream id'
   def destroy
     Follow.find_by(user: @current_user, stream: @stream).destroy
     head :no_content
