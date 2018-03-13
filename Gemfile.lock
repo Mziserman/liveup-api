@@ -45,6 +45,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    apipie-rails (0.5.6)
+      rails (>= 4.1)
     arel (8.0.0)
     bcrypt (3.1.11)
     bindex (0.5.0)
@@ -209,6 +211,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  apipie-rails
   byebug
   capybara (~> 2.13)
   devise
