@@ -4,7 +4,7 @@ class Api::V1::FollowsController < ApplicationController
   before_action :set_stream
 
 
-  api :POST, '/api/v1/streams/:stream_id/follows'
+  api :POST, '/v1/streams/:stream_id/follows'
   param :stream_id, Integer
   def create
     @follow = Follow.find_or_initialize_by(user: @current_user, stream: @stream)
@@ -18,7 +18,7 @@ class Api::V1::FollowsController < ApplicationController
   end
 
 
-  api :DELETE, '/api/v1/streams/:stream_id/follows'
+  api :DELETE, '/v1/streams/:stream_id/follows'
   param :stream_id, Integer
   def destroy
     Follow.find_by(user: @current_user, stream: @stream).destroy

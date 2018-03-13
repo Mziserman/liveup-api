@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  api :POST, '/api/v1/users'
+  api :POST, '/v1/users'
   param :email, String
   param :password, String
   def sign_in
@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  api :POST, '/api/v1/users'
+  api :POST, '/v1/users'
   param :email, String
   param :password, String
   def create
@@ -32,14 +32,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  api :GET, '/api/v1/users'
+  api :GET, '/v1/users'
   def index
     @users = User.all
     render json: @users,
       status: :ok
   end
 
-  api :PUT, '/api/v1/users/:id'
+  api :PUT, '/v1/users/:id'
   param :id, Integer
   param :email, String
   param :password, String
@@ -53,14 +53,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  api :DELETE, '/api/v1/users/:id'
+  api :DELETE, '/v1/users/:id'
   param :id, Integer
   def destroy
     @user.destroy
     head :no_content
   end
 
-  api :GET, '/api/v1/users/:id'
+  api :GET, '/v1/users/:id'
   param :id, Integer
   def show
     render json: @user
