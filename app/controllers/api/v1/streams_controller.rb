@@ -42,17 +42,6 @@ class Api::V1::StreamsController < ApplicationController
     head :no_content
   end
 
-  def follow
-    @follow = @current_user.follows.find_or_initialize_by(stream: @stream)
-    if @follow.save
-      render json: @follow,
-        status: :created
-    else
-      render json: @user.errors,
-        status: :bad_request
-    end
-  end
-
   private
 
   def stream_params
@@ -67,7 +56,7 @@ class Api::V1::StreamsController < ApplicationController
 
   def authorize_user!
     if @current_user != @stream.streamer
-      head :unauthorized
+      return head :unauthorized
     end
   end
 
