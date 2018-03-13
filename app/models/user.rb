@@ -6,7 +6,9 @@ class User < ApplicationRecord
 
   has_many :streams
 
-  has_many :follows
-  has_many :followed_streams, through: :follows, source: :stream
-  has_many :followed_streamers, through: :followed_streams, source: :streamer
+  has_many :following, foreign_key: :follower_id, class_name: "Follow"
+  has_many :followed, foreign_key: :streamer_id, class_name: "Follow"
+
+  has_many :followed_streamers, through: :following, source: :streamer
+  has_many :followers, through: :followed, source: :follower
 end
