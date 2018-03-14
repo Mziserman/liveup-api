@@ -17,6 +17,7 @@ gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'figaro'
 gem 'opentok'
+gem 'apipie-rails'
 gem 'rack-cors'
 
 group :development, :test do
