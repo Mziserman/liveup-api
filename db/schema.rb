@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308085858) do
+ActiveRecord::Schema.define(version: 20180313095018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20180308085858) do
     t.bigint "user_id"
     t.bigint "stripe_product_id"
     t.string "stripe_id"
+    t.integer "streamer_id"
+    t.integer "sbscriber_id"
     t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
     t.index ["user_id"], name: "index_stripe_plans_on_user_id"
   end
@@ -38,15 +40,6 @@ ActiveRecord::Schema.define(version: 20180308085858) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
-  end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "stream_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stream_id"], name: "index_subscriptions_on_stream_id"
-    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,11 +55,8 @@ ActiveRecord::Schema.define(version: 20180308085858) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "stripe_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "subscriptions", "streams"
-  add_foreign_key "subscriptions", "users"
 end

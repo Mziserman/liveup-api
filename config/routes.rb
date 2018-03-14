@@ -4,11 +4,12 @@ Rails.application.routes.draw do
       # devise_for :user, skip: [:registrations, :sessions, :unlocks, :passwords, :invitations]
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         post 'sign_in', on: :collection
+        resources :products, only: [:index]
       end
 
       resources :streams, only: [:index, :create, :show, :update, :destroy]
 
-      resources :sub, only: [:index, :create, :show, :update, :destroy]      
+      resources :products, only: [:create, :show, :update, :destroy]
 
     end
   end
