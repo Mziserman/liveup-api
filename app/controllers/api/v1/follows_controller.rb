@@ -3,11 +3,6 @@ class Api::V1::FollowsController < ApplicationController
   before_action :authorize_user!, only: :destroy
   before_action :set_stream
 
-  # resource_description do
-  #   short 'test'
-  # end
-
-
   api :POST, '/v1/streams/:stream_id/follows', 'Follow streamer'
   param :stream_id, Integer, 'Stream id'
   def create
