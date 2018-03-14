@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_request!, except: [:sign_in, :create]
-  before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
 
   api :POST, '/v1/users', 'Login'
   param :email, String, 'User email'
@@ -40,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   api :PUT, '/v1/users/:id', 'Update user'
-  param :id, Integer, 'User id'
+  param :id, String, 'User id'
   param :email, String, 'User email'
   param :password, String, 'User password'
   def update
@@ -54,14 +54,14 @@ class Api::V1::UsersController < ApplicationController
   end
 
   api :DELETE, '/v1/users/:id', 'Destroy user'
-  param :id, Integer, 'User id'
+  param :id, String, 'User id'
   def destroy
     @user.destroy
     head :no_content
   end
 
   api :GET, '/v1/users/:id', 'Show user'
-  param :id, Integer, 'User id'
+  param :id, String, 'User id'
   def show
     render json: @user
   end

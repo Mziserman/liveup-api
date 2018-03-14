@@ -26,7 +26,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   api :GET, '/v1/streams/:id', 'Show stream'
-  param :id, Integer, 'Stream id'
+  param :id, String, 'Stream id'
   def show
     @stream = Stream.find(params[:id])
 
@@ -35,7 +35,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   api :PUT, '/v1/streams/:id', 'Update stream'
-  param :id, Integer, 'Stream id'
+  param :id, String, 'Stream id'
   def update
     @stream = Stream.find(params[:id])
     if @stream.update(stream_params)
@@ -48,7 +48,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   api :DELETE, '/v1/streams/:id', 'Delete stream'
-  param :id, Integer, 'Stream id'
+  param :id, String, 'Stream id'
   def destroy
     @stream.destroy
     head :no_content
