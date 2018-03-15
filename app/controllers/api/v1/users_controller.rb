@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_request!, except: [:sign_in, :create]
+  before_action :authenticate_request!, except: [:sign_in, :create, :reconnect]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
 
@@ -10,12 +10,28 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find_for_database_authentication(email: sign_in_params[:email])
 
     if @user.present? && @user.valid_password?(sign_in_params[:password])
+      auth_token = ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
+
+      refresh_token = if @user.refresh_token.nil?
+        ::JsonWebToken.encode(user_id: @user.id)
+      else
+        @user.refresh_token
+      end
+
       render json: @user,
         serializer: Api::V1::UserSerializer,
-        token: ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
+        auth_token: auth_token,
+        refresh_token: refresh_token
+
     else
       render [], status: :unauthorized
     end
+  end
+
+
+  api :POST, '/v1/users/reconnect'
+  def reconnect
+    reconnect_user!
   end
 
   api :POST, '/v1/users', 'Create user'

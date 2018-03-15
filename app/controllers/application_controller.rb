@@ -2,22 +2,34 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
 
   def authenticate_request!
-    if !user_id_in_token? && !expired(auth_token)
+    if !user_id_in_auth_token? && !expired(auth_token)
       return head :unauthorized
     end
 
     @current_user = User.find(auth_token[:user_id])
   end
 
+  def reconnect_user!
+    if !user_id_in_refresh_token?
+      return head :unauthorized
+    end
+
+    @current_user = User.find(refresh_token[:user_id])
+  end
+
   protected
 
   private
 
-  def user_id_in_token?
-    http_token && auth_token && auth_token[:user_id]
+  def user_id_in_auth_token?
+    http_auth_token && auth_token && auth_token[:user_id]
   end
 
-  def http_token
+  def user_id_in_refresh_token?
+    http_refresh_token && refresh_token && refresh_token[:user_id]
+  end
+
+  def http_auth_token
     @http_token ||= if request.headers['Authorization'].present?
       request.headers['Authorization'].split(' ').last
     else
@@ -25,8 +37,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def http_refresh_token
+    binding.pry
+    @http_refresh_token ||= if request.headers['Refresh'].present?
+      request.headers['Refresh'].split(' ').last
+    else
+
+    end
+  end
+
   def auth_token
-    @auth_token ||= ::JsonWebToken.decode(http_token)
+    @auth_token ||= ::JsonWebToken.decode(http_auth_token)
+  end
+
+  def refresh_token
+    @refresh_token ||= ::JsonWebToken.decode(http_refresh_token)
   end
 
   def expired(payload)
