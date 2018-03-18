@@ -14,7 +14,13 @@ class ApplicationController < ActionController::Base
       return head :unauthorized
     end
 
-    @current_user = User.find(refresh_token[:user_id])
+    user = User.find(refresh_token[:user_id])
+
+    if user.refresh_token != http_refresh_token
+      return head :unauthorized
+    else
+      @current_user = user
+    end
   end
 
   protected
@@ -38,7 +44,6 @@ class ApplicationController < ActionController::Base
   end
 
   def http_refresh_token
-    binding.pry
     @http_refresh_token ||= if request.headers['Refresh'].present?
       request.headers['Refresh'].split(' ').last
     else

@@ -13,10 +13,12 @@ class Api::V1::UsersController < ApplicationController
       auth_token = ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
 
       refresh_token = if @user.refresh_token.nil?
-        ::JsonWebToken.encode(user_id: @user.id)
+        ::JsonWebToken.encode(user_id: @user.id, exp: 1.year.from_now.to_i)
       else
         @user.refresh_token
       end
+
+      @user.update(refresh_token: refresh_token)
 
       render json: @user,
         serializer: Api::V1::UserSerializer,
@@ -32,6 +34,14 @@ class Api::V1::UsersController < ApplicationController
   api :POST, '/v1/users/reconnect'
   def reconnect
     reconnect_user!
+    refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
+    @current_user.update(refresh_token: refresh_token)
+    auth_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 6.hours.from_now.to_i)
+
+    render json: @current_user,
+      serializer: Api::V1::UserSerializer,
+      auth_token: auth_token,
+      refresh_token: refresh_token
   end
 
   api :POST, '/v1/users', 'Create user'
