@@ -1,8 +1,8 @@
 class Api::V1::FollowSerializer < ActiveModel::Serializer
 
   attributes :id,
-             :user_id,
-             :stream_id,
+             :follower_id,
+             :streamer_id,
              :created_at,
              :updated_at
 
