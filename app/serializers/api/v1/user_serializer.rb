@@ -7,10 +7,16 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
              :created_at,
              :updated_at
 
-  attribute :token, if: -> { instance_options[:token].present? }
+  attribute :auth_token, if: -> { instance_options[:auth_token].present? }
 
-  def token
-    instance_options[:token]
+  def auth_token
+    instance_options[:auth_token]
+  end
+
+  attribute :refresh_token, if: -> { instance_options[:refresh_token].present? }
+
+  def refresh_token
+    instance_options[:refresh_token]
   end
 
 end
