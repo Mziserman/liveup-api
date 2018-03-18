@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_request!, except: [:sign_in, :create, :reconnect]
+  before_action :authenticate_request!, except: [:sign_in, :create, :reconnect, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
 
@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
-  api :POST, '/v1/users/reconnect'
+  api :POST, '/v1/users/reconnect', 'reconnect requires refresh token'
   def reconnect
     reconnect_user!
     refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
