@@ -14,8 +14,10 @@ class Api::V1::StreamsController < ApplicationController
   def create
     opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
     session = opentok.create_session
+    token = session.generate_token
 
-    @stream = @current_user.streams.new(session_id: session.session_id)
+
+    @stream = @current_user.streams.new(session_id: session.session_id, token: token)
     if @stream.save
       render json: @stream,
         status: :created
