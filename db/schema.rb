@@ -51,4 +51,6 @@ ActiveRecord::Schema.define(version: 20180314094201) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "follows", "streams"
+  add_foreign_key "follows", "users"
 end
