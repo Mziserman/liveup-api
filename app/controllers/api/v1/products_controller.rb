@@ -2,8 +2,6 @@ class Api::V1::ProductsController < ApplicationController
 
   before_action :authenticate_request!, except: [:create, :show, :update]
 
-  Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
-
   api :POST, '/v1/products', 'Create products'
   def create
 
