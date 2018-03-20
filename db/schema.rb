@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313095018) do
+ActiveRecord::Schema.define(version: 20180320142520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
+    t.bigint "streamer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["streamer_id"], name: "index_channels_on_streamer_id"
+  end
 
   create_table "streams", force: :cascade do |t|
     t.bigint "user_id"
@@ -23,16 +31,6 @@ ActiveRecord::Schema.define(version: 20180313095018) do
     t.index ["user_id"], name: "index_streams_on_user_id"
   end
 
-  create_table "stripe_plans", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "stripe_product_id"
-    t.string "stripe_id"
-    t.integer "streamer_id"
-    t.integer "sbscriber_id"
-    t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
-    t.index ["user_id"], name: "index_stripe_plans_on_user_id"
-  end
-
   create_table "stripe_products", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
@@ -40,6 +38,17 @@ ActiveRecord::Schema.define(version: 20180313095018) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "stripe_product_id"
+    t.bigint "channel_id"
+    t.bigint "subscriber_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_id"], name: "index_subscriptions_on_channel_id"
+    t.index ["stripe_product_id"], name: "index_subscriptions_on_stripe_product_id"
+    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -59,4 +68,5 @@ ActiveRecord::Schema.define(version: 20180313095018) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "subscriptions", "stripe_products"
 end

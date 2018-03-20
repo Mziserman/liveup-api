@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       resources :streams, only: [:index, :create, :show, :update, :destroy]
 
       resources :products, only: [:create, :show, :update, :destroy]
+      
+      resources :subscriptions, only: [:create, :update, :destroy]
 
     end
   end
