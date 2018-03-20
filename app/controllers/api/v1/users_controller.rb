@@ -47,6 +47,10 @@ class Api::V1::UsersController < ApplicationController
   api :POST, '/v1/users', 'Create user'
   param :email, String, 'User email'
   param :password, String, 'User password'
+  param :pseudo, String, 'User pseudo'
+  param :slug, String, 'User slug'
+  param :first_name, String, 'User first_name'
+  param :last_name, String, 'User last_name'
   def create
     @user = User.new(user_params)
     if @user.save
@@ -69,6 +73,10 @@ class Api::V1::UsersController < ApplicationController
   param :id, String, 'User id'
   param :email, String, 'User email'
   param :password, String, 'User password'
+  param :pseudo, String, 'User pseudo'
+  param :slug, String, 'User slug'
+  param :first_name, String, 'User first_name'
+  param :last_name, String, 'User last_name'
   def update
     if @user.update(user_params)
       render json: @user,
@@ -105,9 +113,10 @@ class Api::V1::UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
-      # :first_name,
-      # :last_name
-      )
+      :pseudo,
+      :slug,
+      :first_name,
+      :last_name)
   end
 
   def set_user
