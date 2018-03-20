@@ -4,9 +4,8 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
              :email,
              # :first_name,
              # :last_name,
-             :created_at,
-             :updated_at
 
+  attribute :stream_id
   attribute :auth_token, if: -> { instance_options[:auth_token].present? }
 
   def auth_token
@@ -17,6 +16,10 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
 
   def refresh_token
     instance_options[:refresh_token]
+  end
+
+  def stream_id
+    @object&.streams&.last&.id
   end
 
 end
