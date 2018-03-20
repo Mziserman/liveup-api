@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  apipie
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      # devise_for :user, skip: [:registrations, :sessions, :unlocks, :passwords, :invitations]
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         post 'sign_in', on: :collection
+        post 'reconnect', on: :collection
+        resources :follows, only: [:create] do
+          delete '', on: :collection, action: :destroy
+        end
         resources :products, only: [:index]
       end
 
