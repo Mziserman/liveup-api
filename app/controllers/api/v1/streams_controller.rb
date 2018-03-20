@@ -28,7 +28,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   api :GET, '/v1/streams/:id', 'Show stream'
-  param :slug, String, 'Streamer id or slug'
+  param :id, String, 'Stream id'
   def show
     render json: @stream,
       status: :ok
@@ -62,7 +62,7 @@ class Api::V1::StreamsController < ApplicationController
 
 
   def set_stream
-    @stream = User.find_by(slug: params[:id])&.streams&.last
+    @stream = Stream.find(params[:id])
   end
 
   def authorize_user!
