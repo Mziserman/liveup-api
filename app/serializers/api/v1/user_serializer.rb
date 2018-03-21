@@ -6,7 +6,8 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
              :first_name,
              :last_name,
              :pseudo,
-             :slug,
+             :slug
+             
   attribute :auth_token, if: -> { instance_options[:auth_token].present? }
 
   def auth_token
