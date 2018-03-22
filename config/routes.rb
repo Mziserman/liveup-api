@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
       resources :products, only: [:create, :show, :update, :destroy]
 
+      resources :subscriptions, only: [:create, :destroy]
+
     end
   end
 end

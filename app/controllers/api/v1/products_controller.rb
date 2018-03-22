@@ -1,21 +1,21 @@
 class Api::V1::ProductsController < ApplicationController
 
-  before_action :authenticate_request!, except: [:create, :show, :update]
+  before_action :authenticate_request!, except: [:show, :update]
 
-  api :POST, '/v1/products', 'Create products'
+  # api :POST, '/v1/products', 'Create products'
   def create
 
     @product = StripeProduct.new(params.require(:product).permit(:price, :name))
 
     @current_user.stripe_products << @product
 
-    if @current_user.save
+    if @current_user.save && @product.save
       render json: @product
     end
 
   end
 
-  api :GET, '/v1/products/:id', 'Get a product by id'
+  # api :GET, '/v1/products/:id', 'Get a product by id'
   def show
 
     if @product = StripeProduct.find(params.require(:id))
@@ -26,12 +26,12 @@ class Api::V1::ProductsController < ApplicationController
 
   end
 
-  api :GET, '/v1/users/:id/products', 'Get all products from user id'
+  # api :GET, '/v1/users/:id/products', 'Get all products from user id'
   def index
       render json: @current_user.stripe_products
   end
 
-  api :PUT, '/v1/products/:id', 'Update a product'
+  # api :PUT, '/v1/products/:id', 'Update a product'
   def update
 
     @product = StripeProduct.find(params.require(:id))
@@ -44,7 +44,7 @@ class Api::V1::ProductsController < ApplicationController
 
   end
 
-  api :DELETE, '/v1/products/:id', 'Delete a product'
+  # api :DELETE, '/v1/products/:id', 'Delete a product'
   def destroy
 
     @product = StripeProduct.find(params.require(:id))

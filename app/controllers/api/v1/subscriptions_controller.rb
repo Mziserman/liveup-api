@@ -1,12 +1,14 @@
-class Api::V1::SubscriptionController < ApplicationController
-
-  before_filter :authenticate_user!
+class Api::V1::SubscriptionsController < ApplicationController
   
+  before_action :authenticate_request!, only: [:create]
+
+  Stripe.api_key = ENV["stripe_api"]
+
   def create
   
     customer = checkCustomer(@current_user)
 
-    product = StripeProduct.find(params[:id])
+    product = StripeProduct.find(params.require(:product).permit(:id)[:id])
 
     plan = Stripe::Plan.create(
       :amount => product.price,
