@@ -6,7 +6,7 @@ class Api::V1::FollowsController < ApplicationController
   api :POST, '/v1/users/:user_id/follows', 'Follow streamer'
   param :user_id, String, 'Stream id'
   def create
-    @follow = Follow.find_or_initialize_by(follower: @current_user, streamer: @streamer)
+    @follow = Follow.find_or_initialize_by(follower: @current_user, channel: @channel)
     if @follow.save
       render json: @follow,
         status: :created
@@ -17,17 +17,17 @@ class Api::V1::FollowsController < ApplicationController
   end
 
 
-  api :DELETE, '/v1/users/:user_id/follows', 'Unfollow streamer'
+  api :DELETE, '/v1/users/:user_id/follows', 'Unfollow channel'
   param :user_id, String, 'Stream id'
   def destroy
-    Follow.find_by(follower: @current_user, streamer: @streamer).destroy
+    Follow.find_by(follower: @current_user, channel: @channel).destroy
     head :no_content
   end
 
   private
 
   def set_streamer
-    @streamer = User.find(params[:user_id])
+    @channel = User.find(params[:channel_id])
   end
 
   def authorize_user!
