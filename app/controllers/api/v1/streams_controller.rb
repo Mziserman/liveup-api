@@ -60,7 +60,7 @@ class Api::V1::StreamsController < ApplicationController
 
   def stream_params
     params.require(:stream).permit(
-      :user_id)
+      :channel_id)
   end
 
 
@@ -69,7 +69,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def authorize_user!
-    if @current_user != @stream.streamer
+    if @current_user != @stream.channel.streamer
       return head :unauthorized
     end
   end

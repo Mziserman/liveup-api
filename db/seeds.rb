@@ -1,6 +1,6 @@
 streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
-stream = streamer.streams.create()
+channel = streamer.create_channel
+stream = channel.streams.create
 
 follower = User.create(email: "follower@gmail.com", password: "salutcfollower")
-Follow.create(streamer: streamer, follower: follower)
-
+follower.follows.create(channel: channel)

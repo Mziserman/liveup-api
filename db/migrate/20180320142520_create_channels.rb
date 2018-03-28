@@ -7,5 +7,9 @@ class CreateChannels < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    remove_reference :follows, :streamer
+    add_reference :follows, :channel
+    add_reference :streams, :channel
   end
 end
