@@ -56,7 +56,7 @@ class Api::V1::ChannelsController < ApplicationController
   def channel_params
     params.require(:channel).permit(
       :user_id,
-      :slug)
+      :name)
   end
 
 
