@@ -2,9 +2,12 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
 
   attributes :id,
              :email,
-             :stream_id
-             # :first_name,
-             # :last_name,
+             :stream_id,
+             :first_name,
+             :last_name,
+             :pseudo,
+             :slug
+
   attribute :auth_token, if: -> { instance_options[:auth_token].present? }
 
   def auth_token

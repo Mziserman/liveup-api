@@ -30,8 +30,6 @@ class Api::V1::StreamsController < ApplicationController
   api :GET, '/v1/streams/:id', 'Show stream'
   param :id, String, 'Stream id'
   def show
-    @stream = Stream.find(params[:id])
-
     render json: @stream,
       status: :ok
   end
@@ -39,7 +37,6 @@ class Api::V1::StreamsController < ApplicationController
   api :PUT, '/v1/streams/:id', 'Update stream'
   param :id, String, 'Stream id'
   def update
-    @stream = Stream.find(params[:id])
     if @stream.update(stream_params)
       render json: @stream,
         status: :updated
