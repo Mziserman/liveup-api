@@ -27,7 +27,7 @@ class Api::V1::FollowsController < ApplicationController
   private
 
   def set_streamer
-    @channel = User.find(params[:channel_id])
+    @channel = Channel.find(params[:channel_id])
   end
 
   def authorize_user!
