@@ -22,19 +22,16 @@ class Api::V1::ChannelsController < ApplicationController
     end
   end
 
-  api :GET, '/v1/channels/:id', 'Show channel'
-  param :id, String, 'Channel id'
+  api :GET, '/v1/channels/:slug', 'Show channel'
+  param :slug, String, 'Channel slug'
   def show
-    @channel = Channel.find(params[:id])
-
     render json: @channel,
       status: :ok
   end
 
-  api :PUT, '/v1/channels/:id', 'Update channel'
-  param :id, String, 'Channel id'
+  api :PUT, '/v1/channels/:slug', 'Update channel'
+  param :slug, String, 'Channel slug'
   def update
-    @channel = Channel.find(params[:id])
     if @channel.update(channel_params)
       render json: @channel,
         status: :updated
@@ -44,8 +41,8 @@ class Api::V1::ChannelsController < ApplicationController
     end
   end
 
-  api :DELETE, '/v1/channels/:id', 'Delete channel'
-  param :id, String, 'Channel id'
+  api :DELETE, '/v1/channels/:slug', 'Delete channel'
+  param :slug, String, 'Channel slug'
   def destroy
     @channel.destroy
     head :no_content
@@ -61,7 +58,7 @@ class Api::V1::ChannelsController < ApplicationController
 
 
   def set_channel
-    @channel = Channel.find(params[:id])
+    @channel = Channel.find_by(slug: params[:id])
   end
 
   def authorize_user!
