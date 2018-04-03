@@ -34,8 +34,6 @@ class Api::V1::UsersController < ApplicationController
   api :POST, '/v1/users/reconnect', 'reconnect requires refresh token'
   def reconnect
     reconnect_user!
-    refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
-    @current_user.update(refresh_token: refresh_token)
     auth_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 6.hours.from_now.to_i)
 
     render json: @current_user,
@@ -79,6 +77,8 @@ class Api::V1::UsersController < ApplicationController
   param :last_name, String, 'User last_name'
   def update
     if @user.update(user_params)
+      refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
+      @current_user.update(refresh_token: refresh_token)
       render json: @user,
         status: :ok
     else
@@ -120,7 +120,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(slug: params[:id])
+    @user = User.find(params[:id])
   end
 
   def authorize_user!
