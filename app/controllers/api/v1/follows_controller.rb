@@ -1,10 +1,10 @@
 class Api::V1::FollowsController < ApplicationController
   before_action :authenticate_request!
-  before_action :set_streamer
+  before_action :set_channel
   before_action :authorize_user!, only: :destroy
 
-  api :POST, '/v1/users/:user_id/follows', 'Follow streamer'
-  param :user_id, String, 'Stream id'
+  api :POST, '/v1/users/:channel_id/follows', 'Follow streamer'
+  param :channel_id, String, 'Channel id'
   def create
     @follow = Follow.find_or_initialize_by(follower: @current_user, channel: @channel)
     if @follow.save
@@ -17,8 +17,8 @@ class Api::V1::FollowsController < ApplicationController
   end
 
 
-  api :DELETE, '/v1/users/:user_id/follows', 'Unfollow channel'
-  param :user_id, String, 'Stream id'
+  api :DELETE, '/v1/users/:channel_id/follows', 'Unfollow channel'
+  param :channel_id, String, 'Channel id'
   def destroy
     Follow.find_by(follower: @current_user, channel: @channel).destroy
     head :no_content
@@ -26,12 +26,12 @@ class Api::V1::FollowsController < ApplicationController
 
   private
 
-  def set_streamer
+  def set_channel
     @channel = Channel.find(params[:channel_id])
   end
 
   def authorize_user!
-    if !@current_user.followed_streamers.include?(@streamer)
+    if !@current_user.followed_channels.include?(@channel)
       return head :unauthorized
     end
   end
