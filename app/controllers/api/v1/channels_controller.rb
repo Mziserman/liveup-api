@@ -10,6 +10,8 @@ class Api::V1::ChannelsController < ApplicationController
   end
 
   api :POST, '/v1/channels', 'Create channel'
+  param :name, String, 'Channel name'
+  param :user_id, Integer, 'User id'
   def create
     @channel = @current_user.create_channel(channel_params)
 
@@ -31,6 +33,8 @@ class Api::V1::ChannelsController < ApplicationController
 
   api :PUT, '/v1/channels/:slug', 'Update channel'
   param :slug, String, 'Channel slug'
+  param :name, String, 'Channel name'
+  param :user_id, Integer, 'User id'
   def update
     if @channel.update(channel_params)
       render json: @channel,

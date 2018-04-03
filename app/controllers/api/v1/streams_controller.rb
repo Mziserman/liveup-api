@@ -22,7 +22,7 @@ class Api::V1::StreamsController < ApplicationController
       render json: @stream,
         status: :created
     else
-      render json: @user.errors,
+      render json: @stream.errors,
         status: :bad_request
     end
   end

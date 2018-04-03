@@ -46,7 +46,6 @@ class Api::V1::UsersController < ApplicationController
   param :email, String, 'User email'
   param :password, String, 'User password'
   param :pseudo, String, 'User pseudo'
-  param :slug, String, 'User slug'
   param :first_name, String, 'User first_name'
   param :last_name, String, 'User last_name'
   def create
@@ -72,7 +71,6 @@ class Api::V1::UsersController < ApplicationController
   param :email, String, 'User email'
   param :password, String, 'User password'
   param :pseudo, String, 'User pseudo'
-  param :slug, String, 'User slug'
   param :first_name, String, 'User first_name'
   param :last_name, String, 'User last_name'
   def update
@@ -114,7 +112,6 @@ class Api::V1::UsersController < ApplicationController
       :password,
       :password_confirmation,
       :pseudo,
-      :slug,
       :first_name,
       :last_name)
   end
