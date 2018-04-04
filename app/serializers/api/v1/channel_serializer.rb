@@ -4,8 +4,12 @@ class Api::V1::ChannelSerializer < ActiveModel::Serializer
              :name,
              :streamer_id,
              :slug,
-             :stream_id
+             :stream_id,
+             :is_live
 
+  def is_live
+    true
+  end
 
   def stream_id
     @object&.streams&.last&.id
