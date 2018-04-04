@@ -1,9 +1,15 @@
 class Api::V1::FollowsController < ApplicationController
   before_action :authenticate_request!
-  before_action :set_channel
+  before_action :set_channel, except: :index
   before_action :authorize_user!, only: :destroy
 
-  api :POST, '/v1/users/:channel_id/follows', 'Follow streamer'
+  api :GET, '/v1/users/follows', 'Follow index'
+  def index
+    @followed_channels = @current_user.followed_channels
+    render json: @followed_channels
+  end
+
+  api :POST, '/v1/channels/:channel_id/follows', 'Follow streamer'
   param :channel_id, String, 'Channel id'
   def create
     @follow = Follow.find_or_initialize_by(follower: @current_user, channel: @channel)
@@ -17,7 +23,7 @@ class Api::V1::FollowsController < ApplicationController
   end
 
 
-  api :DELETE, '/v1/users/:channel_id/follows', 'Unfollow channel'
+  api :DELETE, '/v1/channels/:channel_id/follows', 'Unfollow channel'
   param :channel_id, String, 'Channel id'
   def destroy
     Follow.find_by(follower: @current_user, channel: @channel).destroy

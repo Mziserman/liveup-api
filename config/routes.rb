@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         resources :products, only: [:index]
       end
 
+      resources :follows, only: [:index]
+
       resources :channels, only: [:index, :create, :show, :update, :destroy] do
         resources :follows, only: [:create] do
           delete '', on: :collection, action: :destroy
