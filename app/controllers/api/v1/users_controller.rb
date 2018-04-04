@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
 
-  api :POST, '/v1/users', 'Login'
+  api :POST, '/v1/users/sign_in', 'Login'
   param :email, String, 'User email'
   param :password, String, 'User password'
   def sign_in
@@ -35,6 +35,7 @@ class Api::V1::UsersController < ApplicationController
   def reconnect
     reconnect_user!
     auth_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 6.hours.from_now.to_i)
+    refresh_token = @current_user.refresh_token
 
     render json: @current_user,
       serializer: Api::V1::UserSerializer,
