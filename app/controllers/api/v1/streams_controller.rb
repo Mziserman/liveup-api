@@ -14,13 +14,15 @@ class Api::V1::StreamsController < ApplicationController
   def create
     opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
     session = opentok.create_session
+    token = session.generate_token
 
-    @stream = @current_user.streams.new(session_id: session.session_id)
+
+    @stream = @current_user.channel&.streams.new(session_id: session.session_id, token: token)
     if @stream.save
       render json: @stream,
         status: :created
     else
-      render json: @user.errors,
+      render json: @stream.errors,
         status: :bad_request
     end
   end
@@ -28,8 +30,6 @@ class Api::V1::StreamsController < ApplicationController
   api :GET, '/v1/streams/:id', 'Show stream'
   param :id, String, 'Stream id'
   def show
-    @stream = Stream.find(params[:id])
-
     render json: @stream,
       status: :ok
   end
@@ -37,7 +37,6 @@ class Api::V1::StreamsController < ApplicationController
   api :PUT, '/v1/streams/:id', 'Update stream'
   param :id, String, 'Stream id'
   def update
-    @stream = Stream.find(params[:id])
     if @stream.update(stream_params)
       render json: @stream,
         status: :updated
@@ -58,7 +57,7 @@ class Api::V1::StreamsController < ApplicationController
 
   def stream_params
     params.require(:stream).permit(
-      :user_id)
+      :channel_id)
   end
 
 
@@ -67,7 +66,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def authorize_user!
-    if @current_user != @stream.streamer
+    if @current_user != @stream.channel.streamer
       return head :unauthorized
     end
   end

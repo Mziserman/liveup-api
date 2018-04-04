@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'stripe'
 gem 'figaro'
 gem 'opentok'
 gem 'apipie-rails'
@@ -28,6 +29,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do

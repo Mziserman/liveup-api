@@ -10,27 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314094201) do
+ActiveRecord::Schema.define(version: 20180402205604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
+    t.bigint "streamer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["streamer_id"], name: "index_channels_on_streamer_id"
+  end
+
   create_table "follows", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "streamer_id"
     t.bigint "follower_id"
+    t.bigint "channel_id"
+    t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
-    t.index ["streamer_id"], name: "index_follows_on_streamer_id"
   end
 
   create_table "streams", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_id"
-    t.index ["user_id"], name: "index_streams_on_user_id"
+    t.bigint "channel_id"
+    t.index ["channel_id"], name: "index_streams_on_channel_id"
+  end
+
+  create_table "stripe_products", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.integer "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_stripe_products_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,10 +65,12 @@ ActiveRecord::Schema.define(version: 20180314094201) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "refresh_token"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "pseudo"
+    t.string "slug"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "follows", "streams"
-  add_foreign_key "follows", "users"
 end

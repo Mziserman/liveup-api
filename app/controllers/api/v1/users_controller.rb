@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
 
-  api :POST, '/v1/users', 'Login'
+  api :POST, '/v1/users/sign_in', 'Login'
   param :email, String, 'User email'
   param :password, String, 'User password'
   def sign_in
@@ -34,9 +34,8 @@ class Api::V1::UsersController < ApplicationController
   api :POST, '/v1/users/reconnect', 'reconnect requires refresh token'
   def reconnect
     reconnect_user!
-    refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
-    @current_user.update(refresh_token: refresh_token)
     auth_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 6.hours.from_now.to_i)
+    refresh_token = @current_user.refresh_token
 
     render json: @current_user,
       serializer: Api::V1::UserSerializer,
@@ -47,6 +46,9 @@ class Api::V1::UsersController < ApplicationController
   api :POST, '/v1/users', 'Create user'
   param :email, String, 'User email'
   param :password, String, 'User password'
+  param :pseudo, String, 'User pseudo'
+  param :first_name, String, 'User first_name'
+  param :last_name, String, 'User last_name'
   def create
     @user = User.new(user_params)
     if @user.save
@@ -69,8 +71,13 @@ class Api::V1::UsersController < ApplicationController
   param :id, String, 'User id'
   param :email, String, 'User email'
   param :password, String, 'User password'
+  param :pseudo, String, 'User pseudo'
+  param :first_name, String, 'User first_name'
+  param :last_name, String, 'User last_name'
   def update
     if @user.update(user_params)
+      refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
+      @current_user.update(refresh_token: refresh_token)
       render json: @user,
         status: :ok
     else
@@ -105,9 +112,9 @@ class Api::V1::UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
-      # :first_name,
-      # :last_name
-      )
+      :pseudo,
+      :first_name,
+      :last_name)
   end
 
   def set_user
