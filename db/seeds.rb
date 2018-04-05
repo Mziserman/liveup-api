@@ -6,8 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
-stream = streamer.streams.create()
+# streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
+# stream = streamer.streams.create()
 
-subscriber = User.create(email: "subscriber@gmail.com", password: "salutcsubscriber")
-subscription = stream.subscriptions.create(stream: stream, user: subscriber)
+# subscriber = User.create(email: "subscriber@gmail.com", password: "salutcsubscriber")
+# subscription = stream.subscriptions.create(stream: stream, user: subscriber)
+
+StripeProduct.create(name: "Loisir", price: 10)
+StripeProduct.create(name: "Pas loisir", price: 100)

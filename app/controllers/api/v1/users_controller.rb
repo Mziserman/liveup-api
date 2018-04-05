@@ -2,6 +2,8 @@ class Api::V1::UsersController < ApplicationController
   before_action :authenticate_request!, except: [:sign_in, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  Stripe.api_key = ENV["stripe_api"]
+
   def sign_in
     @user = User.find_for_database_authentication(email: sign_in_params[:email])
 
@@ -56,7 +58,46 @@ class Api::V1::UsersController < ApplicationController
     render json: @user
   end
 
+  def subscribe
+    
+    customer = checkCustomer(@current_user)
+
+    if !customer
+      render json: {"error": "User does not have payment infos"}
+      return
+    end
+
+    product = StripeProduct.find(params.require(:product_id))
+
+    plan = Stripe::Plan.create(
+      :amount => product.price,
+      :interval => "month",
+      :currency => "eur",
+      :product => {
+        :name => "Subscription " + product.name
+      }
+    )
+
+    subscription = Stripe::Subscription.create({
+        customer: customer.id,
+        items: [{plan: plan.id}],
+    })
+
+    if @subscription.save
+      render json: @subscription
+    end
+
+  end
+
   private
+
+  def checkCustomer(user)
+    if user.stripe_id
+      return Stripe::Customer.retrieve(user.stripe_id)
+    else
+     return false
+    end
+  end
 
   def sign_in_params
     params.require(:user).permit(

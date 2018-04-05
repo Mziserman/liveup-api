@@ -19,6 +19,7 @@ gem 'stripe'
 gem 'figaro'
 gem 'opentok'
 gem 'rack-cors'
+gem "rolify"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
