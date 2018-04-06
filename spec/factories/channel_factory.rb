@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :channel do
     sequence(:name, 1)        { |n| "#{n}-#{Faker::Internet.name}" }
 
-    factory :channel_with_streams do
+    trait :with_streams do
 
       transient do
         streams_count 5
@@ -10,6 +10,14 @@ FactoryBot.define do
 
       after(:create) do |channel, evaluator|
         create_list(:stream, evaluator.streams_count, channel: channel)
+      end
+
+    end
+
+    trait :with_streamer do
+
+      before(:create) do |channel|
+        channel.streamer = create(:user)
       end
 
     end
