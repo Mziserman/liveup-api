@@ -8,9 +8,13 @@ RSpec.describe Channel, type: :model do
   end
 
   context "channel" do
-    let!(:channel) { create(:user_with_channel).channel }
+    let!(:channel) { create(:channel, :with_streamer) }
     let!(:follower) { create(:user) }
     let!(:follower2) { create(:user) }
+
+    it "can't be persisted without streamer" do
+      expect{ create(:channel) }.to raise_error(ActiveRecord::RecordInvalid)
+    end
 
     it "can be persisted" do
       expect(channel).to be_persisted
@@ -20,7 +24,9 @@ RSpec.describe Channel, type: :model do
     it "can have a stream" do
       stream = channel.streams.create
       expect(stream).to be_persisted
-      expect(stream.channel).to be_persisted
+      expect(stream.channel).to eq channel
+      expect(channel.streams.length).to eq 1
+      expect(channel.streams.first).to eq stream
     end
 
     it "can be followed" do
@@ -28,9 +34,11 @@ RSpec.describe Channel, type: :model do
       expect(follow).to be_persisted
       expect(follow.follower).to eq(follower)
       expect(channel.followers).to eq([follower])
+
       follow2 = channel.follows.create follower: follower2
-      expect(channel.followers[0]).to eq(follower)
-      expect(channel.followers[1]).to eq(follower2)
+      channel.reload
+
+      expect(channel.followers).to eq([follower, follower2])
     end
   end
 end

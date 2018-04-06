@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
   end
 
   context "streamer" do
-    let!(:streamer) { create(:user_with_streams, streams_count: 10) }
+    let!(:streamer) { create(:user, :with_streams, streams_count: 10) }
 
     context "streamer" do
       it "has a channel" do
@@ -28,12 +28,14 @@ RSpec.describe User, type: :model do
   end
 
   context "follower" do
-    let!(:streamer) { create(:user_with_channel) }
+    let!(:streamer) { create(:user, :with_channel) }
     let!(:follower) { create(:user) }
 
     context "streamer" do
       it "can follow a channel" do
         expect(follower.follow! streamer.channel).to be_persisted
+        expect(follower.followed_channels).to eq([streamer.channel])
+        expect(follower.followed_streamers).to eq([streamer])
       end
     end
   end
