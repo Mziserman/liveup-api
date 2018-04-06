@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://redistogo:a8b3283834d46c10073732ae788c0e38@soldierfish.redistogo.com:11777/
+  url: redis://redistogo:aff9cc76ddee4104f91bdd34ec257dc6@porgy.redistogo.com:10507/
   channel_prefix: liveup_production
