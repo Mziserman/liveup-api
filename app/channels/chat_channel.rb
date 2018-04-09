@@ -10,7 +10,7 @@ class ChatChannel < ApplicationCable::Channel
     cm = ChatMessage.create(
       content: options.fetch('content'),
       stream_id: params[:stream_id],
-      user: @current_user
+      user: current_user
     )
     puts cm.errors.inspect
   end
