@@ -2,7 +2,7 @@ class ChatMessage < ApplicationRecord
   after_create_commit do
     ActionCable
       .server
-      .broadcast('chat_channel',
+      .broadcast("stream_#{stream_id}_channel",
                  id: id,
                  created_at: created_at.strftime('%H:%M'),
                  content: content)
