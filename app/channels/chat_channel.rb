@@ -7,10 +7,11 @@ class ChatChannel < ApplicationCable::Channel
   def unsubscribed; end
 
   def create(options)
-    ChatMessage.create(
+    cm = ChatMessage.create(
       content: options.fetch('content'),
       stream_id: params[:stream_id],
       user: @current_user
     )
+    puts cm.errors.inspect
   end
 end
