@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405092046) do
+ActiveRecord::Schema.define(version: 20180409081337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 20180405092046) do
 
   create_table "chat_messages", force: :cascade do |t|
     t.text "content"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "stream_id"
+    t.bigint "user_id"
+    t.index ["stream_id"], name: "index_chat_messages_on_stream_id"
     t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
@@ -59,6 +61,17 @@ ActiveRecord::Schema.define(version: 20180405092046) do
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "stripe_product_id"
+    t.bigint "channel_id"
+    t.bigint "subscriber_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_id"], name: "index_subscriptions_on_channel_id"
+    t.index ["stripe_product_id"], name: "index_subscriptions_on_stripe_product_id"
+    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -76,9 +89,9 @@ ActiveRecord::Schema.define(version: 20180405092046) do
     t.string "first_name"
     t.string "last_name"
     t.string "pseudo"
-    t.string "slug"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "subscriptions", "stripe_products"
 end

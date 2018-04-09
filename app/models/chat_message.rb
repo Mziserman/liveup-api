@@ -7,4 +7,7 @@ class ChatMessage < ApplicationRecord
                  created_at: created_at.strftime('%H:%M'),
                  content: content)
   end
+
+  belongs_to :stream
+  belongs_to :user
 end
