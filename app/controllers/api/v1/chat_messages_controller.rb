@@ -4,7 +4,7 @@ class Api::V1::ChatMessagesController < ApplicationController
   api :GET, '/v1/streams/:id/chat_messages', 'ChatMessage index'
   def index
     @chat_messages = @stream.chat_messages
-    render json: @followed_channels
+    render json: @chat_messages
   end
 
   private
