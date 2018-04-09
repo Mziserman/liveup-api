@@ -18,7 +18,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :streams, only: [:index, :create, :show, :update, :destroy]
+      resources :streams, only: [:index, :create, :show, :update, :destroy] do
+        resources :chat_messages, only: [:index]
+      end
 
       resources :products, only: [:create, :show, :update, :destroy]
 

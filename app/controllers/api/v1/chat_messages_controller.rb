@@ -10,7 +10,7 @@ class Api::V1::ChatMessagesController < ApplicationController
   private
 
   def set_stream
-    @channel = Channel.find(params[:channel_id])
+    @stream = Stream.find(params[:stream_id])
   end
 
 end
