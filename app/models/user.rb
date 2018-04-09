@@ -15,4 +15,8 @@ class User < ApplicationRecord
 
   has_many :followeds, through: :channel, source: :follows
   has_many :followed_by, through: :followeds, source: :follower
+
+  def follow!(channel)
+    follows.create channel: channel
+  end
 end

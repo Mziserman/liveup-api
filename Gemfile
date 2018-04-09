@@ -27,7 +27,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'database_cleaner'
+  gem 'factory_bot'
+  gem 'faker'
+  gem 'rspec-rails'
   gem 'dotenv-rails'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'pry-byebug'
 end
 
 group :development do
