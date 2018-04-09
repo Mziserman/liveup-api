@@ -7,7 +7,7 @@ module ApplicationCable
         reject_unauthorized_connection
       end
 
-      self.current_user = User.find(auth_token[:user_id])
+      self.current_user = User.find(@auth_token[:user_id])
     end
 
     private
