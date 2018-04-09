@@ -5,7 +5,8 @@ class ChatMessage < ApplicationRecord
       .broadcast("stream_#{stream_id}_channel",
                  id: id,
                  created_at: created_at.strftime('%H:%M'),
-                 content: content)
+                 content: content,
+                 pseudo: user.pseudo)
   end
 
   belongs_to :stream
