@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20180410080504) do
     t.integer "score"
     t.bigint "user_id"
     t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stream_id"], name: "index_questions_on_stream_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
@@ -68,17 +70,6 @@ ActiveRecord::Schema.define(version: 20180410080504) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
-  end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "stripe_product_id"
-    t.bigint "channel_id"
-    t.bigint "subscriber_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["channel_id"], name: "index_subscriptions_on_channel_id"
-    t.index ["stripe_product_id"], name: "index_subscriptions_on_stripe_product_id"
-    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,5 +93,4 @@ ActiveRecord::Schema.define(version: 20180410080504) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "subscriptions", "stripe_products"
 end
