@@ -4,6 +4,7 @@ class ChatMessage < ApplicationRecord
       .server
       .broadcast("stream_#{stream_id}_channel",
                  id: id,
+                 user_id: user_id,
                  created_at: created_at,
                  content: content,
                  pseudo: user.pseudo)
