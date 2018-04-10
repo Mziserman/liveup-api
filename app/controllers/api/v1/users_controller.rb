@@ -58,6 +58,7 @@ class Api::V1::UsersController < ApplicationController
     render json: @user
   end
 
+  # api :POST, '/v1/products/:product_id/users', 'Subscribe user to product'
   def subscribe
     
     customer = checkCustomer(@current_user)
