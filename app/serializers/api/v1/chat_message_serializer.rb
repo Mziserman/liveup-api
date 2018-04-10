@@ -1,4 +1,4 @@
-class Api::V1::ChannelSerializer < ActiveModel::Serializer
+class Api::V1::ChatMessageSerializer < ActiveModel::Serializer
 
   attributes :id,
              :message,
