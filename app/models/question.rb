@@ -1,11 +1,12 @@
-class ChatMessage < ApplicationRecord
+class Question < ApplicationRecord
   after_create_commit do
     ActionCable
       .server
-      .broadcast("stream_#{stream_id}_chat_channel",
+      .broadcast("stream_#{stream_id}_question_channel",
                  id: id,
                  user_id: user_id,
                  created_at: created_at,
+                 score: score,
                  content: content,
                  pseudo: user.pseudo)
   end
