@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   has_many :stripe_products
 
+  has_many :chat_messages
+  has_many :questions
+
   has_one :channel, foreign_key: :streamer_id
   has_many :streams, through: :channel
 
