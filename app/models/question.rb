@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  after_create_commit do
+  after_commit do
     ActionCable
       .server
       .broadcast("stream_#{stream_id}_question_channel",
