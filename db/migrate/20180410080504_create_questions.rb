@@ -5,6 +5,8 @@ class CreateQuestions < ActiveRecord::Migration[5.1]
       t.integer :score
       t.references :user
       t.references :stream
+
+      t.timestamps
     end
   end
 end
