@@ -13,4 +13,9 @@ class QuestionChannel < ApplicationCable::Channel
       user: current_user
     )
   end
+
+  def vote(options)
+    question = Question.find(options.fetch('question_id'))
+    question.update(score: question.score + 1)
+  end
 end
