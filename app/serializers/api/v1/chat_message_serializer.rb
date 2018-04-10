@@ -1,7 +1,7 @@
 class Api::V1::ChatMessageSerializer < ActiveModel::Serializer
 
   attributes :id,
-             :message,
+             :content,
              :pseudo,
              :created_at
 
