@@ -6,7 +6,7 @@ class Question < ApplicationRecord
                  id: id,
                  user_id: user_id,
                  created_at: created_at,
-                 score: score,
+                 score: question_votes_count,
                  content: content,
                  pseudo: user.pseudo)
   end
