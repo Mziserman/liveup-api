@@ -1,4 +1,4 @@
-class Api::V1::QuestionsController < ApplicationController
+class Api::V1::QuestionVotesController < ApplicationController
   before_action :authenticate_request!
   before_action :set_stream
 
