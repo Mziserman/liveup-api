@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :chat_messages
   has_many :questions
 
+  has_many :question_votes
+  has_many :upvoted_questions, through: :question_votes, source: :question
+
   has_one :channel, foreign_key: :streamer_id
   has_many :streams, through: :channel
 

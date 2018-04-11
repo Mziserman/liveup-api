@@ -11,6 +11,9 @@ class Question < ApplicationRecord
                  pseudo: user.pseudo)
   end
 
+  default_scope { order(question_votes_count: :desc) }
+
+  has_many :question_votes
   belongs_to :stream
   belongs_to :user
 end

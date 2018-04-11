@@ -7,6 +7,10 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
              :user_id,
              :created_at
 
+  def score
+    @object.question_votes_count
+  end
+
   def pseudo
     @object.user.pseudo
   end
