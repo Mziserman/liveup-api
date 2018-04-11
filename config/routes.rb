@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       resources :streams, only: [:index, :create, :show, :update, :destroy] do
         resources :chat_messages, only: [:index]
         resources :questions, only: [:index]
-        get 'question_votes', on: :collection
+        resources :question_votes, only: [:index]
       end
 
       resources :products, only: [:create, :show, :update, :destroy]

@@ -53,14 +53,6 @@ class Api::V1::StreamsController < ApplicationController
     head :no_content
   end
 
-  api :GET, 'v1/streams/:id/upvoted_questions', 'Upvoted questions'
-  param :id, String, 'Stream id'
-  def upvoted_questions
-    @upvoted_questions = @current_user.upvoted_questions.where(stream: @stream)
-    render json: @upvoted_questions,
-      status: :ok
-  end
-
   private
 
   def stream_params
