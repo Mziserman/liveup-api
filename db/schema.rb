@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410080504) do
+ActiveRecord::Schema.define(version: 20180411074140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20180410080504) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "question_votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_votes_on_question_id"
+    t.index ["user_id"], name: "index_question_votes_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.text "content"
     t.integer "score"
@@ -50,6 +59,7 @@ ActiveRecord::Schema.define(version: 20180410080504) do
     t.bigint "stream_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "question_votes_count", default: 0
     t.index ["stream_id"], name: "index_questions_on_stream_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
