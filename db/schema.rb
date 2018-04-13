@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413073304) do
+ActiveRecord::Schema.define(version: 20180413082634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20180413073304) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stream_id"], name: "index_likes_on_stream_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "question_votes", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "question_id"
@@ -54,7 +63,6 @@ ActiveRecord::Schema.define(version: 20180413073304) do
 
   create_table "questions", force: :cascade do |t|
     t.text "content"
-    t.integer "score"
     t.bigint "user_id"
     t.bigint "stream_id"
     t.datetime "created_at", null: false
@@ -70,6 +78,7 @@ ActiveRecord::Schema.define(version: 20180413073304) do
     t.datetime "updated_at", null: false
     t.string "session_id"
     t.bigint "channel_id"
+    t.integer "likes_count", default: 0
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
@@ -80,15 +89,6 @@ ActiveRecord::Schema.define(version: 20180413073304) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
-  end
-
-  create_table "user_like_streams", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "stream_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stream_id"], name: "index_user_like_streams_on_stream_id"
-    t.index ["user_id"], name: "index_user_like_streams_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
