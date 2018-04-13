@@ -3,5 +3,7 @@ class Stream < ApplicationRecord
 
   has_many :chat_messages
   has_many :questions
+
   has_many :likes
+  has_many :liked_by, through: :likes, source: :user
 end

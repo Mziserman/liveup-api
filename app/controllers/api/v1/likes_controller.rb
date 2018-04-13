@@ -1,6 +1,6 @@
 class Api::V1::LikesController < ApplicationController
   before_action :authenticate_request!
-  before_action :set_channel, except: :index
+  before_action :set_stream, except: :index
   before_action :authorize_user!, only: :destroy
 
   api :GET, '/v1/liked', 'Like index'
