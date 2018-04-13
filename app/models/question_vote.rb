@@ -6,9 +6,9 @@ class QuestionVote < ApplicationRecord
       .broadcast("stream_#{question.stream_id}_question_channel",
                  id: question.id,
                  user_id: question.user_id,
-                 created_at: questioncreated_at,
+                 created_at: question.created_at,
                  score: question.question_votes_count,
-                 content: questioncontent,
+                 content: question.content,
                  pseudo: question.user.pseudo)
   end
 
