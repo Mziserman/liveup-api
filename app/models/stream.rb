@@ -3,4 +3,5 @@ class Stream < ApplicationRecord
 
   has_many :chat_messages
   has_many :questions
+  has_many :likes
 end
