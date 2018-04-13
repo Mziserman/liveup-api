@@ -17,7 +17,7 @@ class QuestionChannel < ApplicationCable::Channel
   def vote(options)
     question = Question.find(options.fetch('question_id'))
     if current_user.upvoted_questions.include?(question)
-      question_vote = QuestionVote.find user: current_user, question: question
+      question_vote = QuestionVote.find_by user: current_user, question: question
       question_vote.destroy
     else
       question_vote = QuestionVote.create user: current_user, question: question
