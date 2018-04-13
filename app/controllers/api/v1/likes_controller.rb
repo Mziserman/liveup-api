@@ -12,7 +12,7 @@ class Api::V1::LikesController < ApplicationController
   api :POST, '/v1/streams/:stream_id/likes', 'Like streamer'
   param :stream_id, String, 'Stream id'
   def create
-    @like = Like.find_or_initialize_by(liker: @current_user, stream: @stream)
+    @like = Like.find_or_initialize_by(user: @current_user, stream: @stream)
     if @like.save
       render json: @like,
         status: :created
@@ -25,7 +25,7 @@ class Api::V1::LikesController < ApplicationController
   api :DELETE, '/v1/streams/:stream_id/likes', 'Unlike stream'
   param :stream_id, String, 'Stream id'
   def destroy
-    Like.find_by(liker: @current_user, stream: @stream).destroy
+    Like.find_by(user: @current_user, stream: @stream).destroy
     head :no_content
   end
 
