@@ -8,9 +8,11 @@ Rails.application.routes.draw do
         post 'sign_in', on: :collection
         post 'reconnect', on: :collection
         resources :products, only: [:index]
+        resources :liked_streams, only: [:index]
       end
 
       resources :follows, only: [:index]
+      get 'liked', to: 'likes#index'
 
       resources :channels, only: [:index, :create, :show, :update, :destroy] do
         resources :follows, only: [:create] do
@@ -19,9 +21,14 @@ Rails.application.routes.draw do
       end
 
       resources :streams, only: [:index, :create, :show, :update, :destroy] do
+        resources :likes, only: [:create] do
+          delete '', on: :collection, action: :destroy
+        end
         resources :chat_messages, only: [:index]
         resources :share_files, only: [:index]
         resources :commits, only: [:index]
+        resources :questions, only: [:index]
+        resources :question_votes, only: [:index]
       end
 
       resources :products, only: [:create, :show, :update, :destroy]

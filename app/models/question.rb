@@ -1,15 +1,19 @@
-class ChatMessage < ApplicationRecord
-  after_create_commit do
+class Question < ApplicationRecord
+  after_commit do
     ActionCable
       .server
-      .broadcast("stream_#{stream_id}_chat_channel",
+      .broadcast("stream_#{stream_id}_question_channel",
                  id: id,
                  user_id: user_id,
                  created_at: created_at,
+                 score: question_votes_count,
                  content: content,
                  pseudo: user.pseudo)
   end
 
+  default_scope { order(question_votes_count: :desc) }
+
+  has_many :question_votes
   belongs_to :stream
   belongs_to :user
 end

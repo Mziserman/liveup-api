@@ -1,7 +1,7 @@
 class Api::V1::StreamsController < ApplicationController
   before_action :authenticate_request!, except: [:index, :show]
-  before_action :authorize_user!, except: [:index, :create, :show, :follow]
-  before_action :set_stream, only: [:show, :edit, :update, :destroy, :follow]
+  before_action :authorize_user!, except: [:index, :create, :show, :follow, :upvoted_questions]
+  before_action :set_stream, only: [:show, :edit, :update, :destroy, :follow, :upvoted_questions]
 
   api :GET, '/v1/streams', 'List streams'
   def index
@@ -17,7 +17,7 @@ class Api::V1::StreamsController < ApplicationController
     token = session.generate_token
 
 
-    @stream = @current_user.channel&.streams.new(session_id: session.session_id, token: token)
+    @stream = @current_user.channel&.streams&.new(session_id: session.session_id, token: token)
     if @stream.save
       render json: @stream,
         status: :created

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413080904) do
+ActiveRecord::Schema.define(version: 20180413082634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,35 @@ ActiveRecord::Schema.define(version: 20180413080904) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stream_id"], name: "index_likes_on_stream_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "question_votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_votes_on_question_id"
+    t.index ["user_id"], name: "index_question_votes_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "question_votes_count", default: 0
+    t.index ["stream_id"], name: "index_questions_on_stream_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
   create_table "share_files", force: :cascade do |t|
     t.string "name"
     t.string "path"
@@ -68,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180413080904) do
     t.datetime "updated_at", null: false
     t.string "session_id"
     t.bigint "channel_id"
+    t.integer "likes_count", default: 0
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 

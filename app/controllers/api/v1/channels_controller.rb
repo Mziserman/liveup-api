@@ -13,13 +13,15 @@ class Api::V1::ChannelsController < ApplicationController
   param :name, String, 'Channel name'
   param :user_id, Integer, 'User id'
   def create
-    @channel = @current_user.create_channel(channel_params)
+    @channel = @current_user.channel ?
+      @current_user.channel :
+      @current_user.create_channel(channel_params)
 
-    if @channel.save
+    if @channel
       render json: @channel,
         status: :created
     else
-      render json: @user.errors,
+      render json: @channel.errors,
         status: :bad_request
     end
   end

@@ -79,6 +79,8 @@ class Api::V1::UsersController < ApplicationController
       refresh_token = ::JsonWebToken.encode(user_id: @current_user.id, exp: 1.year.from_now.to_i)
       @current_user.update(refresh_token: refresh_token)
       render json: @user,
+        serializer: Api::V1::UserSerializer,
+        refresh_token: refresh_token,
         status: :ok
     else
       render json: @user.errors,
