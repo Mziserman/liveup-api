@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409081337) do
+ActiveRecord::Schema.define(version: 20180413080904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20180409081337) do
     t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
+  create_table "commits", force: :cascade do |t|
+    t.string "name"
+    t.string "path"
+    t.integer "version"
+    t.bigint "share_file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["share_file_id"], name: "index_commits_on_share_file_id"
+  end
+
   create_table "follows", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,6 +51,15 @@ ActiveRecord::Schema.define(version: 20180409081337) do
     t.bigint "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "share_files", force: :cascade do |t|
+    t.string "name"
+    t.string "path"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stream_id"], name: "index_share_files_on_stream_id"
   end
 
   create_table "streams", force: :cascade do |t|
@@ -59,17 +78,6 @@ ActiveRecord::Schema.define(version: 20180409081337) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_stripe_products_on_user_id"
-  end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "stripe_product_id"
-    t.bigint "channel_id"
-    t.bigint "subscriber_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["channel_id"], name: "index_subscriptions_on_channel_id"
-    t.index ["stripe_product_id"], name: "index_subscriptions_on_stripe_product_id"
-    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -93,5 +101,4 @@ ActiveRecord::Schema.define(version: 20180409081337) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "subscriptions", "stripe_products"
 end
