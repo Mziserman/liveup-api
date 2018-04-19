@@ -2,9 +2,9 @@ class Commit < ApplicationRecord
 
   belongs_to :shared_file
 
-  before_create version_and_shit_nigga
+  before_create create_version
 
-  def version_and_shit_nigga
+  def create_version
     version = file.commit.last.version + 1
   end
 
