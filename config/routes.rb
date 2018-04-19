@@ -25,6 +25,8 @@ Rails.application.routes.draw do
           delete '', on: :collection, action: :destroy
         end
         resources :chat_messages, only: [:index]
+        resources :shared_files, only: [:index]
+        resources :commits, only: [:index]
         resources :questions, only: [:index]
         resources :question_votes, only: [:index]
       end
@@ -32,6 +34,10 @@ Rails.application.routes.draw do
       resources :products, only: [:create, :show, :update, :destroy]
 
       resources :subscriptions, only: [:create, :update, :destroy]
+
+      resources :shared_files, only: [:create, :update] do
+        resources :commits, only: [:create, :update, :destroy, :show]
+      end
 
     end
   end
