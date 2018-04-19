@@ -1,6 +1,11 @@
 class Stream < ApplicationRecord
-  belongs_to :streamer, foreign_key: :user_id, class_name: "User"
+  belongs_to :channel
 
-  has_many :follows
-  has_many :followers, through: :follows, source: :user
+  has_many :chat_messages
+  has_one :shared_file
+  has_many :commits, through: :shared_files
+  has_many :questions
+
+  has_many :likes
+  has_many :liked_by, through: :likes, source: :user
 end

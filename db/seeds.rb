@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -14,3 +15,10 @@
 
 StripeProduct.create(name: "Loisir", price: 10)
 StripeProduct.create(name: "Pas loisir", price: 100)
+
+streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
+channel = streamer.create_channel(name: "salut c streamer")
+stream = channel.streams.create
+
+follower = User.create(email: "follower@gmail.com", password: "salutcfollower")
+follower.follows.create(channel: channel)

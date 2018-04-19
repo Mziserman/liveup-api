@@ -10,10 +10,77 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404093616) do
+ActiveRecord::Schema.define(version: 20180413082634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
+    t.bigint "streamer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["streamer_id"], name: "index_channels_on_streamer_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "stream_id"
+    t.bigint "user_id"
+    t.index ["stream_id"], name: "index_chat_messages_on_stream_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
+  end
+
+  create_table "commits", force: :cascade do |t|
+    t.string "name"
+    t.string "path"
+    t.integer "version"
+    t.bigint "shared_file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shared_file_id"], name: "index_commits_on_shared_file_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "follower_id"
+    t.bigint "channel_id"
+    t.index ["channel_id"], name: "index_follows_on_channel_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stream_id"], name: "index_likes_on_stream_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "question_votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_votes_on_question_id"
+    t.index ["user_id"], name: "index_question_votes_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "question_votes_count", default: 0
+    t.index ["stream_id"], name: "index_questions_on_stream_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
@@ -25,22 +92,23 @@ ActiveRecord::Schema.define(version: 20180404093616) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "shared_files", force: :cascade do |t|
+    t.string "name"
+    t.string "path"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stream_id"], name: "index_shared_files_on_stream_id"
+  end
+
   create_table "streams", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_streams_on_user_id"
-  end
-
-  create_table "stripe_plans", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "stripe_product_id"
-    t.string "stripe_id"
-    t.integer "streamer_id"
-    t.integer "sbscriber_id"
-    t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
-    t.index ["user_id"], name: "index_stripe_plans_on_user_id"
+    t.string "session_id"
+    t.bigint "channel_id"
+    t.integer "likes_count", default: 0
+    t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
   create_table "stripe_products", force: :cascade do |t|
@@ -74,6 +142,10 @@ ActiveRecord::Schema.define(version: 20180404093616) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "refresh_token"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "pseudo"
     t.string "stripe_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
