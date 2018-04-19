@@ -6,7 +6,7 @@ class QuestionChannel < ApplicationCable::Channel
 
   def unsubscribed; end
 
-  def create(options)
+  def question(options)
     Question.create(
       content: options.fetch('content'),
       stream_id: params[:stream_id],
