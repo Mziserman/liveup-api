@@ -22,7 +22,6 @@ gem 'apipie-rails'
 gem 'rack-cors'
 gem 'sidekiq'
 gem 'redis'
-gem 'aws-sdk'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
