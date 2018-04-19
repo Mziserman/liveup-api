@@ -9,7 +9,7 @@ class Api::V1::SharedFilesController < ApplicationController
   end
   def create
 
-    @file = SharedFile.create(params.require(:shared_file).permit(:name, :path))
+    @file = SharedFile.create(share_file_params)
 
     @current_user.streams.last.shared_file = @file
 
@@ -26,7 +26,7 @@ class Api::V1::SharedFilesController < ApplicationController
   def update
     @file = SharedFile.find(params[:shared_file_id])
 
-    if @file.update(params.require(:shared_file).permit(:name))
+    if @file.update(share_file_params)
       render json: @file
     else
       render json: @file.errors, head: :unprocessable_entity
@@ -38,6 +38,12 @@ class Api::V1::SharedFilesController < ApplicationController
     @stream = Stream.find(params[:stream_id])
 
     render json: @stream.shared_file
+  end
+
+  private
+
+  def share_file_params
+    params.require(:shared_file).permit(:name, :path)
   end
 
 end

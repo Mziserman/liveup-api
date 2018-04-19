@@ -10,7 +10,7 @@ class Api::V1::CommitsController < ApplicationController
   def create
     file = SharedFile.find(params[:shared_file_id])
 
-    @commit = Commit.new(params.require(:commit).permit(:name, :path))
+    @commit = Commit.new(commit_param)
 
     @commit.version = file.commits.last.version + 1
 
@@ -30,7 +30,7 @@ class Api::V1::CommitsController < ApplicationController
 
     @commit = Commit.find(params[:commit_id])
 
-    if @commit.update(params.require(:commit).permit(:name))
+    if @commit.update(commit_param)
       render json: @commit
     else
       render json: @commit.errors, head: :unprocessable_entity
@@ -56,6 +56,12 @@ class Api::V1::CommitsController < ApplicationController
     @commit = Commit.find(params[:commit_id])
 
     render json: @commit
+  end
+
+  private
+
+  def commit_param
+    params.require(:commit).permit(:name, :path)
   end
 
 end
