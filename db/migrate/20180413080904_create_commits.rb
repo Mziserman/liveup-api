@@ -4,7 +4,7 @@ class CreateCommits < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :path
       t.integer :version
-      t.references :share_file
+      t.references :shared_file
 
       t.timestamps
     end

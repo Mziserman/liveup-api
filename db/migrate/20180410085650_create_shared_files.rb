@@ -1,6 +1,6 @@
-class CreateShareFiles < ActiveRecord::Migration[5.1]
+class CreateSharedFiles < ActiveRecord::Migration[5.1]
   def change
-    create_table :share_files do |t|
+    create_table :shared_files do |t|
       t.string  :name
       t.string  :path
       t.references :stream

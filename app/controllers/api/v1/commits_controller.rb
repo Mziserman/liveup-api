@@ -2,13 +2,13 @@ class Api::V1::CommitsController < ApplicationController
   
   before_action :authenticate_request!, except: [:index, :show]
 
-  api :POST, '/api/v1/share_files/:share_files_id/commits', 'Create commit'
+  api :POST, '/api/v1/shared_files/:shared_files_id/commits', 'Create commit'
   param :commit, Hash, 'Commit object' do
     param :name, String, 'Name of commit'
     param :path, String, 'Path of file'
   end
   def create
-    file = ShareFile.find(params[:share_file_id])
+    file = SharedFile.find(params[:shared_file_id])
 
     @commit = Commit.new(params.require(:commit).permit(:name, :path))
 
@@ -42,7 +42,7 @@ class Api::V1::CommitsController < ApplicationController
   def index
     @stream = Stream.find(params[:stream_id])
 
-    render json: @stream.share_file.commits
+    render json: @stream.shared_file.commits
   end
 
   api :DELETE, '/api/v1/commits/:commit_id', 'Delete commit'

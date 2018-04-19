@@ -1,5 +1,5 @@
 class Commit < ApplicationRecord
 
-  belongs_to :share_file
+  belongs_to :shared_file
 
 end

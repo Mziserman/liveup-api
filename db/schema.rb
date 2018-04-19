@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 20180413082634) do
     t.string "name"
     t.string "path"
     t.integer "version"
-    t.bigint "share_file_id"
+    t.bigint "shared_file_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["share_file_id"], name: "index_commits_on_share_file_id"
+    t.index ["shared_file_id"], name: "index_commits_on_shared_file_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -82,13 +82,13 @@ ActiveRecord::Schema.define(version: 20180413082634) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
-  create_table "share_files", force: :cascade do |t|
+  create_table "shared_files", force: :cascade do |t|
     t.string "name"
     t.string "path"
     t.bigint "stream_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stream_id"], name: "index_share_files_on_stream_id"
+    t.index ["stream_id"], name: "index_shared_files_on_stream_id"
   end
 
   create_table "streams", force: :cascade do |t|
