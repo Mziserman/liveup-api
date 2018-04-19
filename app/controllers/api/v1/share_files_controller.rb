@@ -3,9 +3,10 @@ class Api::V1::ShareFilesController < ApplicationController
   before_action :authenticate_request!, except: [:index]
 
   api :POST, '/api/v1/share_files', 'Create File'
-  param :share_file, String, 'share_file object contain the following arguments'
-  param :name, String, 'Sample name for all commits'
-  param :path, String, 'Sample path for all commits'
+  param :share_file, Hash, 'share_file object' do
+    param :name, String, 'Sample name for all commits'
+    param :path, String, 'Sample path for all commits'
+  end
   def create
 
     @file = ShareFile.create(params.require(:share_file).permit(:name, :path))
@@ -19,8 +20,9 @@ class Api::V1::ShareFilesController < ApplicationController
   end
 
   api :PUT, '/api/v1/share_files/:share_file_id', 'Update File'
-  param :share_file, String, 'share_file object contain the following arguments'
-  param :name, String, 'Sample name for all commits'
+  param :share_file, Hash, 'share_file object' do
+    param :name, String, 'Sample name for all commits'
+  end
   def update
     @file = ShareFile.find(params[:share_file_id])
 

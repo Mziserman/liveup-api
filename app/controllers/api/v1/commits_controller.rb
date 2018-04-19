@@ -3,9 +3,10 @@ class Api::V1::CommitsController < ApplicationController
   before_action :authenticate_request!, except: [:index, :show]
 
   api :POST, '/api/v1/share_files/:share_files_id/commits', 'Create commit'
-  param :commit, String, 'Commit object contain the following arguments'
-  param :name, String, 'Name of commit'
-  param :path, String, 'Path of file'
+  param :commit, Hash, 'Commit object' do
+    param :name, String, 'Name of commit'
+    param :path, String, 'Path of file'
+  end
   def create
     file = ShareFile.find(params[:share_file_id])
 
@@ -22,8 +23,9 @@ class Api::V1::CommitsController < ApplicationController
   end
 
   api :PUT, '/api/v1/commits/:commit_id', 'Update commit'
-  param :commit, String, 'Commit object contain the following arguments'
-  param :name, String, 'Name of commit'
+  param :commit, Hash, 'Commit object' do
+    param :name, String, 'Name of commit'
+  end
   def update
 
     @commit = Commit.find(params[:commit_id])
