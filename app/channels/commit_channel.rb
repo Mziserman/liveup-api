@@ -7,10 +7,10 @@ class CommitChannel < ApplicationCable::Channel
   def unsubscribed; end
 
   def create(options)
-    ChatMessage.create(
-      content: options.fetch('content'),
-      stream_id: params[:stream_id],
-      user: current_user
+    Commit.create(
+      path: options.fetch('path'),
+      name: options.fetch('name'),
+      shared_file_id: options.fetch('shared_file_id')
     )
   end
 end
