@@ -10,13 +10,7 @@ class Api::V1::CommitsController < ApplicationController
   def create
     file = SharedFile.find(params[:shared_file_id])
 
-    @commit = Commit.new(commit_param)
-
-    @commit.version = file.commits.last.version + 1
-
-    file.commits << @commit
-
-    if @commit.save
+    if @commit = file.commits.create(commit_param)
       render json: @commit
     end
 
@@ -42,7 +36,7 @@ class Api::V1::CommitsController < ApplicationController
   def index
     @stream = Stream.find(params[:stream_id])
 
-    render json: @stream.shared_file.commits
+    render json: @stream.commits
   end
 
   api :DELETE, '/api/v1/commits/:commit_id', 'Delete commit'

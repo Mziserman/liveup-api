@@ -3,6 +3,7 @@ class Stream < ApplicationRecord
 
   has_many :chat_messages
   has_one :shared_file
+  has_many :commits, through: :shared_files
   has_many :questions
 
   has_many :likes
