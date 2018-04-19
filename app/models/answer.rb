@@ -1,4 +1,4 @@
-class Question < ApplicationRecord
+class Answer < ApplicationRecord
   after_commit do
     ActionCable
       .server
@@ -6,15 +6,15 @@ class Question < ApplicationRecord
                  id: id,
                  user_id: user_id,
                  created_at: created_at,
-                 score: question_votes_count,
+                 score: answer_votes_count,
                  content: content,
                  pseudo: user.pseudo)
   end
 
-  default_scope { order(question_votes_count: :desc) }
+  default_scope { order(answer_votes_count: :desc) }
 
-  has_many :question_votes
-  has_many :answers
+  has_many :answer_votes
+  belongs_to :question
   belongs_to :stream
   belongs_to :user
 end

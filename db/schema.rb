@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413082634) do
+ActiveRecord::Schema.define(version: 20180419084151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answer_votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_answer_votes_on_answer_id"
+    t.index ["user_id"], name: "index_answer_votes_on_user_id"
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.text "content"
+    t.integer "answer_votes_count", default: 0
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["stream_id"], name: "index_answers_on_stream_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
+  end
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
