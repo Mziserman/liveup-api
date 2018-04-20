@@ -5,12 +5,5 @@ class CommitChannel < ApplicationCable::Channel
   end
 
   def unsubscribed; end
-
-  def create(options)
-    Commit.create(
-      path: options.fetch('path'),
-      name: options.fetch('name'),
-      shared_file_id: options.fetch('shared_file_id')
-    )
-  end
+  
 end
