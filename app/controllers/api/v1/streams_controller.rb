@@ -57,7 +57,8 @@ class Api::V1::StreamsController < ApplicationController
 
   def stream_params
     params.require(:stream).permit(
-      :channel_id)
+      :channel_id,
+      :live)
   end
 
 
