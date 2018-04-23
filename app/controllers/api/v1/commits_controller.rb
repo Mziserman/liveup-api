@@ -2,7 +2,7 @@ class Api::V1::CommitsController < ApplicationController
   
   before_action :authenticate_request!, except: [:index, :show]
 
-  api :POST, '/api/v1/shared_files/:shared_files_id/commits', 'Create commit'
+  api :POST, '/v1/shared_files/:shared_files_id/commits', 'Create commit'
   param :commit, Hash, 'Commit object' do
     param :name, String, 'Name of commit'
     param :path, String, 'Path of file'
@@ -16,7 +16,7 @@ class Api::V1::CommitsController < ApplicationController
 
   end
 
-  api :PUT, '/api/v1/commits/:commit_id', 'Update commit'
+  api :PUT, '/v1/commits/:commit_id', 'Update commit'
   param :commit, Hash, 'Commit object' do
     param :name, String, 'Name of commit'
   end
@@ -32,20 +32,20 @@ class Api::V1::CommitsController < ApplicationController
 
   end
 
-  api :GET, '/api/v1/streams/:stream_id/commits', 'Show all commits for a stream'
+  api :GET, '/v1/streams/:stream_id/commits', 'Show all commits for a stream'
   def index
     @stream = Stream.find(params[:stream_id])
 
     render json: @stream.commits
   end
 
-  api :DELETE, '/api/v1/commits/:commit_id', 'Delete commit'
+  api :DELETE, '/v1/commits/:commit_id', 'Delete commit'
   def destroy
     Commit.find(params[:commit_id]).destroy
     head :no_content
   end
 
-  api :GET, '/api/v1/commits/:commit_id', 'Show commit'
+  api :GET, '/v1/commits/:commit_id', 'Show commit'
   def show
     @commit = Commit.find(params[:commit_id])
 
