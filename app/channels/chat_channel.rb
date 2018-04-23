@@ -1,6 +1,6 @@
-class CommitChannel < ApplicationCable::Channel
+class ChatChannel < ApplicationCable::Channel
   def subscribed
-    channel = "stream_#{params[:stream_id]}_commit_channel"
+    channel = "stream_#{params[:stream_id]}_chat_channel"
     stream_from channel
   end
 
