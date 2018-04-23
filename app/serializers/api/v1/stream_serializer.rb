@@ -5,7 +5,7 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
              :session_id,
              :token,
              :likes,
-             :live
+             :live?
 
   def likes
     @object.likes_count
