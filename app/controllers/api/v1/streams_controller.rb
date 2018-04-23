@@ -39,7 +39,7 @@ class Api::V1::StreamsController < ApplicationController
   def update
     if @stream.update(stream_params)
       render json: @stream,
-        status: :updated
+        status: :ok
     else
       render json: @stream.errors,
         status: :bad_request
