@@ -3,7 +3,7 @@ class Commit < ApplicationRecord
   after_create_commit do
     ActionCable
       .server
-      .broadcast("stream_#{file.stream_id}_commit_channel",
+      .broadcast("stream_#{shared_file.stream_id}_commit_channel",
                  version: version,
                  path: path,
                  name: name,
@@ -15,7 +15,11 @@ class Commit < ApplicationRecord
   before_create :create_version
 
   def create_version
-    version = file.commit.last.version + 1
+    if shared_file.commits.last
+      version = shared_file.commits.last.version + 1
+    else
+      version = 0
+    end
   end
 
 end
