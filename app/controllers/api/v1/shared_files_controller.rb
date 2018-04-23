@@ -2,7 +2,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
   before_action :authenticate_request!, except: [:index]
 
-  api :POST, '/api/v1/shared_files', 'Create File'
+  api :POST, '/v1/shared_files', 'Create File'
   param :shared_file, Hash, 'share_file object' do
     param :name, String, 'Sample name for all commits'
     param :path, String, 'Sample path for all commits'
@@ -19,7 +19,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
   end
 
-  api :PUT, '/api/v1/shared_files/:shared_file_id', 'Update File'
+  api :PUT, '/v1/shared_files/:shared_file_id', 'Update File'
   param :shared_file, Hash, 'share_file object' do
     param :name, String, 'Sample name for all commits'
   end
@@ -33,7 +33,7 @@ class Api::V1::SharedFilesController < ApplicationController
     end
   end
 
-  api :GET, '/api/v1/streams/:stream_id/shared_files', 'Index File for a stream'
+  api :GET, '/v1/streams/:stream_id/shared_files', 'Index File for a stream'
   def index
     @stream = Stream.find(params[:stream_id])
 

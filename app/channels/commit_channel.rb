@@ -5,12 +5,5 @@ class CommitChannel < ApplicationCable::Channel
   end
 
   def unsubscribed; end
-
-  def create(options)
-    ChatMessage.create(
-      content: options.fetch('content'),
-      stream_id: params[:stream_id],
-      user: current_user
-    )
-  end
+  
 end
