@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419084151) do
+ActiveRecord::Schema.define(version: 20180423074739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20180419084151) do
     t.string "session_id"
     t.bigint "channel_id"
     t.integer "likes_count", default: 0
+    t.boolean "live"
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
