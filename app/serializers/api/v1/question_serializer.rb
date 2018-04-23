@@ -18,7 +18,7 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
 
   def answers
     @object.answers.map do |answer|
-      AnswerSerializer.new(answer, scope: scope, root: false)
+      ::Api::V1::AnswerSerializer.new(answer, scope: scope, root: false)
     end
   end
 
