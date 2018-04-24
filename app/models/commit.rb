@@ -16,9 +16,9 @@ class Commit < ApplicationRecord
 
   def create_version
     if shared_file.commits.last
-      version = shared_file.commits.last.version + 1
+      self.version = shared_file.commits.last.version + 1
     else
-      version = 0
+      self.version = 0
     end
   end
 
