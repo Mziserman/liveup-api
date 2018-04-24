@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         post 'sign_in', on: :collection
         post 'reconnect', on: :collection
+        post 'interested', on: :collection
         resources :products, only: [:index]
         resources :liked_streams, only: [:index]
       end

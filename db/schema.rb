@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423074739) do
+ActiveRecord::Schema.define(version: 20180424181317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,10 @@ ActiveRecord::Schema.define(version: 20180423074739) do
     t.bigint "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "interested_users", force: :cascade do |t|
+    t.text "email"
   end
 
   create_table "likes", force: :cascade do |t|
