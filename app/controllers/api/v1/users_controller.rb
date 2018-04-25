@@ -101,6 +101,12 @@ class Api::V1::UsersController < ApplicationController
     render json: @user
   end
 
+  api :GET, '/v1/users/interested', 'Show user'
+  param :email, String, 'User email'
+  def interested
+    InterestedUser.create(params.require(:user).permit(:email))
+  end
+
   private
 
   def sign_in_params
