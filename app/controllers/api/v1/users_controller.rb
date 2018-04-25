@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_request!, except: [:sign_in, :create, :reconnect, :show]
+  before_action :authenticate_request!, except: [:sign_in, :create, :reconnect, :show, :interested]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, except: [:sign_in, :create, :index, :show]
+  before_action :authorize_user!, except: [:sign_in, :create, :index, :show, :interested]
 
   api :POST, '/v1/users/sign_in', 'Login'
   param :email, String, 'User email'
