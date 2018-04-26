@@ -7,9 +7,10 @@ module ApplicationCable
         self.current_user = nil
       elsif !user_id_in_auth_token? || expired(@auth_token)
         reject_unauthorized_connection
+      else
+        self.current_user = User.find(@auth_token[:user_id])
       end
 
-      self.current_user = User.find(@auth_token[:user_id])
     end
 
     private
