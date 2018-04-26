@@ -4,6 +4,7 @@ class Commit < ApplicationRecord
     ActionCable
       .server
       .broadcast("stream_#{shared_file.stream_id}_commit_channel",
+                 id: id,
                  version: version,
                  path: path,
                  name: name,
