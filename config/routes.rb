@@ -7,7 +7,8 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         post 'sign_in', on: :collection
         post 'reconnect', on: :collection
-        resources :products, only: [:index]
+        post 'interested', on: :collection
+        resources :products, only: [:show]
         resources :liked_streams, only: [:index]
       end
 
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
         resources :likes, only: [:create] do
           delete '', on: :collection, action: :destroy
         end
+        post 'buy', action: :buy
         resources :chat_messages, only: [:index]
         resources :shared_files, only: [:index]
         resources :commits, only: [:index]
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
       end
 
       resources :products, only: [:show, :index] do
-        resources :users, action: :subscribe
+        post 'buy', action: :buy
       end
 
       resources :customers, only: [:create]

@@ -40,7 +40,7 @@ class Api::V1::ChannelsController < ApplicationController
   def update
     if @channel.update(channel_params)
       render json: @channel,
-        status: :updated
+        status: :ok
     else
       render json: @channel.errors,
         status: :bad_request

@@ -4,6 +4,7 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
              :content,
              :score,
              :pseudo,
+             :answers,
              :user_id,
              :created_at
 
@@ -13,6 +14,12 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
 
   def pseudo
     @object.user.pseudo
+  end
+
+  def answers
+    @object.answers.map do |answer|
+      ::Api::V1::AnswerSerializer.new(answer, scope: scope, root: false)
+    end
   end
 
 end

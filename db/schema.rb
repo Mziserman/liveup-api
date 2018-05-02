@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413082634) do
+ActiveRecord::Schema.define(version: 20180424181317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answer_votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_answer_votes_on_answer_id"
+    t.index ["user_id"], name: "index_answer_votes_on_user_id"
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.text "content"
+    t.integer "answer_votes_count", default: 0
+    t.bigint "user_id"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["stream_id"], name: "index_answers_on_stream_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
+  end
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -51,6 +73,10 @@ ActiveRecord::Schema.define(version: 20180413082634) do
     t.bigint "channel_id"
     t.index ["channel_id"], name: "index_follows_on_channel_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "interested_users", force: :cascade do |t|
+    t.text "email"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -108,6 +134,7 @@ ActiveRecord::Schema.define(version: 20180413082634) do
     t.string "session_id"
     t.bigint "channel_id"
     t.integer "likes_count", default: 0
+    t.boolean "live"
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
@@ -117,16 +144,8 @@ ActiveRecord::Schema.define(version: 20180413082634) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-  end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "channels_id"
-    t.string "stripe_plan_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["channels_id"], name: "index_subscriptions_on_channels_id"
-    t.index ["users_id"], name: "index_subscriptions_on_users_id"
+    t.integer "product_type"
+    t.string "stripe_id"
   end
 
   create_table "users", force: :cascade do |t|

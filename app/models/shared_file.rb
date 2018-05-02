@@ -1,7 +1,7 @@
 class SharedFile < ApplicationRecord
 
   belongs_to :stream
-  has_many   :commits
+  has_many :commits
 
   after_create :init_commit
 
