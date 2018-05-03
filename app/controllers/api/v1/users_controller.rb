@@ -106,6 +106,11 @@ class Api::V1::UsersController < ApplicationController
     InterestedUser.create(params.require(:user).permit(:email))
   end
 
+  api :GET, '/v1/users/:user_id/owned_streams', 'Get all user\'s favorites streams / bought streams'
+  def owned_streams
+    render json: @user.owned_streams
+  end
+
   private
 
   def sign_in_params

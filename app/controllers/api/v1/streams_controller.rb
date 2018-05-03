@@ -68,7 +68,7 @@ class Api::V1::StreamsController < ApplicationController
 
     product = StripeProduct.where(product_type: 'one_shot').first
 
-    @current_user.streams << @stream
+    @current_user.owned_streams << @stream
 
     @charge = Stripe::Charge.create({
       amount: product.price,

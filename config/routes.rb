@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         post 'sign_in', on: :collection
         post 'reconnect', on: :collection
         post 'interested', on: :collection
+        get  'streams', action: :owned_streams
         resources :products, only: [:show]
         resources :liked_streams, only: [:index]
       end

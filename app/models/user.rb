@@ -29,7 +29,7 @@ class User < ApplicationRecord
   has_many :followed_streamers, through: :followed_channels, source: :streamer
 
   has_many :owned_stream_relations, class_name: "OwnedStream"
-  has_many :owned_stream, through: :owned_stream_relations, source: :stream
+  has_many :owned_streams, through: :owned_stream_relations, source: :stream
 
   has_many :followeds, through: :channel, source: :follows
   has_many :followed_by, through: :followeds, source: :follower
