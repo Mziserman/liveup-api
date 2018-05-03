@@ -10,6 +10,8 @@ class ChatMessage < ApplicationRecord
                  pseudo: user.pseudo)
   end
 
+  default_scope { order(created_at: :asc) }
+
   belongs_to :stream
   belongs_to :user
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         post 'reconnect', on: :collection
         post 'interested', on: :collection
         get  'streams', action: :owned_streams
-        resources :products, only: [:show]
+        resources :products, only: [:show, :index]
         resources :liked_streams, only: [:index]
       end
 
