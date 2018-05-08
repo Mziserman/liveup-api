@@ -1,7 +1,8 @@
 class ChatMessageCreationEventBroadcastWorker
   include Sidekiq::Worker
 
-  def perform(message)
+  def perform(message_id)
+    message = ChatMessage.find(message_id)
     ActionCable
       .server
       .broadcast('chat_channel',
