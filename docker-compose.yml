@@ -2,18 +2,32 @@ version: '3'
 
 services:
   postgres:
-    image: postgres:9.6
+    image: postgres:9.6-alpine
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
     build: .
     command: start
-    volumes:
-      - .:/app
     ports:
       - "3000:3000"
     depends_on:
       - postgres
+    environment:
+      - db_name=postgres
+      - db_host=postgres
+      - redis_url=redis://redis:6379/
 
   redis:
-    image: redis:4.0
+    image: redis:4.0-alpine
+
+  sidekiq:
+    depends_on:
+      - 'postgres'
+      - 'redis'
+    build: .
+    command: sidekiq
+    environment:
+      - db_name=postgres
+      - db_host=postgres
+      - redis_url=redis://redis:6379/
+
