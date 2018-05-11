@@ -23,6 +23,7 @@ gem 'rack-cors'
 gem "rolify"
 gem 'sidekiq'
 gem 'redis'
+gem 'aws-sdk', '~> 2'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

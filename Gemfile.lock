@@ -48,6 +48,14 @@ GEM
     apipie-rails (0.5.6)
       rails (>= 4.1)
     arel (8.0.0)
+    aws-sdk (2.11.48)
+      aws-sdk-resources (= 2.11.48)
+    aws-sdk-core (2.11.48)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.11.48)
+      aws-sdk-core (= 2.11.48)
+    aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     bindex (0.5.0)
     builder (3.2.3)
@@ -101,6 +109,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jmespath (1.4.0)
     json (1.8.6)
     jsonapi-renderer (0.2.0)
     jwt (2.1.0)
@@ -264,6 +273,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   apipie-rails
+  aws-sdk (~> 2)
   byebug
   capybara (~> 2.13)
   database_cleaner

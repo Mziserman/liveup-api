@@ -12,8 +12,8 @@
 # subscriber = User.create(email: "subscriber@gmail.com", password: "salutcsubscriber")
 # subscription = stream.subscriptions.create(stream: stream, user: subscriber)
 
-StripeProduct.create(name: "One shot", price: 10, product_type: 0)
-StripeProduct.create(name: "Pas one shot", price: 100, product_type: 1)
+# StripeProduct.create(name: "One shot", price: 10, product_type: 0)
+# StripeProduct.create(name: "Pas one shot", price: 100, product_type: 1)
 
 streamer = User.create(email: "streamer@gmail.com", password: "salutcstreamer")
 channel = streamer.create_channel(name: "salut c streamer")
