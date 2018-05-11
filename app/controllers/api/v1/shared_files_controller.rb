@@ -2,6 +2,15 @@ class Api::V1::SharedFilesController < ApplicationController
 
   before_action :authenticate_request!, except: [:index]
 
+  api :GET, '/v1/shared_files/credentials', 'Get Credentials'
+  def credentials
+    sts = Aws::STS::Client.new()
+
+    @resp = sts.get_session_token()
+
+    render json: @resp.to_h
+  end
+
   api :POST, '/v1/shared_files', 'Create File'
   param :shared_file, Hash, 'share_file object' do
     param :name, String, 'Sample name for all commits'
