@@ -15,9 +15,8 @@ class Api::V1::StreamsController < ApplicationController
   api :POST, '/v1/streams', 'Create stream'
   def create
     opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-    session = opentok.create_session
+    session = opentok.create_session archive_mode: :always, media_mode: :routed
     token = session.generate_token
-
 
     @stream = @current_user.channel&.streams&.new(session_id: session.session_id, token: token)
     if @stream.save
