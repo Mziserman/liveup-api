@@ -16,7 +16,11 @@ class Api::V1::StreamsController < ApplicationController
     session = opentok.create_session archive_mode: :always, media_mode: :routed, resolution: "1280x720"
     token = session.generate_token
 
-    @stream = @current_user.channel&.streams&.new({**stream_params, session_id: session.session_id, token: token})
+    @stream = @current_user.channel&.streams&.new(stream_params)
+    if @stream
+      @stream.session_id = session.session_id
+      @stream.token = token
+    end
     if @stream.save
       render json: @stream,
         status: :created
