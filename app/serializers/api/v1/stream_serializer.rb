@@ -1,6 +1,8 @@
 class Api::V1::StreamSerializer < ActiveModel::Serializer
 
   attributes :id,
+             :title,
+             :description,
              :channel_id,
              :session_id,
              :token,
