@@ -8,7 +8,8 @@ Rails.application.routes.draw do
         post 'sign_in', on: :collection
         post 'reconnect', on: :collection
         post 'interested', on: :collection
-        resources :products, only: [:index]
+        get  'streams', action: :owned_streams
+        resources :products, only: [:show, :index]
         resources :liked_streams, only: [:index]
       end
 
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
         resources :likes, only: [:create] do
           delete '', on: :collection, action: :destroy
         end
+        post 'buy', action: :buy
         resources :chat_messages, only: [:index]
         resources :shared_files, only: [:index]
         resources :commits, only: [:index]
@@ -32,11 +34,18 @@ Rails.application.routes.draw do
         resources :question_votes, only: [:index]
       end
 
-      resources :products, only: [:create, :show, :update, :destroy]
+      resources :products, only: [:show, :index] do
+        post 'buy', action: :buy
+      end
+
+      resources :customers, only: [:create]
+
+      post 'webhook', action: :webhook, controller: 'webhooks'
 
       resources :subscriptions, only: [:create, :update, :destroy]
 
-      resources :shared_files, only: [:create, :update] do
+      get 'credentials', to: 'shared_files#credentials'
+      resources :shared_files, only: [:create, :updSate] do
         resources :commits, only: [:create, :update, :destroy, :show]
       end
 

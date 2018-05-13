@@ -30,7 +30,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-
   api :POST, '/v1/users/reconnect', 'reconnect requires refresh token'
   def reconnect
     reconnect_user!
@@ -105,6 +104,11 @@ class Api::V1::UsersController < ApplicationController
   param :email, String, 'User email'
   def interested
     InterestedUser.create(params.require(:user).permit(:email))
+  end
+
+  api :GET, '/v1/users/:user_id/owned_streams', 'Get all user\'s favorites streams / bought streams'
+  def owned_streams
+    render json: @user.owned_streams
   end
 
   private

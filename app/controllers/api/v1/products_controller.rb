@@ -1,59 +1,46 @@
 class Api::V1::ProductsController < ApplicationController
+  
+  before_action :authenticate_request!, except: [:show, :update]
 
-  before_action :authenticate_request!, except: [:create, :show, :update]
+  Stripe.api_key = ENV["stripe_api"]
 
-  Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
-
-  api :POST, '/v1/products', 'Create products'
-  def create
-
-    @product = StripeProduct.new(params.require(:product).permit(:price, :name))
-
-    @current_user.stripe_products << @product
-
-    if @current_user.save
-      render json: @product
-    end
-
-  end
-
-  api :GET, '/v1/products/:id', 'Get a product by id'
+  api :GET, 'api/v1/products/:id', 'Get a product by id'
   def show
 
-    if @product = StripeProduct.find(params.require(:id))
-      render json: @product
+    if params[:user_id]
+      render json: User.find(params[:user_id]).stripe_product
     else
-      render json: @product.errors
+      if @product = StripeProduct.find(params.require(:id))
+        render json: @product
+      else
+        render json: @product.errors
+      end
     end
 
   end
 
-  api :GET, '/v1/users/:id/products', 'Get all products from user id'
+  api :GET, 'api/v1/products', 'Get all products from user id'
   def index
-      render json: @current_user.stripe_products
+    render json: StripeProduct.all()
   end
 
-  api :PUT, '/v1/products/:id', 'Update a product'
-  def update
+  def buy
 
-    @product = StripeProduct.find(params.require(:id))
+    customer = User.checkCustomer(@current_user)
 
-    if @product.update(params.require(:product).permit(:price, :name))
-      render json: @product
-    else
-      render json: @product.errors, head: :unprocessable_entity
+    if !customer
+      render json: {'error': 'customer does not exist. You should consider creating it by using this => /api/v1/customers POST#CREATE. Have a nice day !'}
+      return
     end
 
-  end
+    product = StripeProduct.find(params.require(:product_id))
 
-  api :DELETE, '/v1/products/:id', 'Delete a product'
-  def destroy
+    @subscription = Stripe::Subscription.create({
+      customer: customer.id,
+      items: [{plan: product.stripe_id}],
+    })
 
-    @product = StripeProduct.find(params.require(:id))
-
-    if @product.destroy
-      render json: {deleted: true}
-    end
+    render json: @subscription
 
   end
 
