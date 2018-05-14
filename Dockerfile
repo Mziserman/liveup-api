@@ -5,7 +5,7 @@ RUN apt-get update -qq \
 
 RUN mkdir -p /app
 
-# Copy the entrypoint at root 
+# Copy the entrypoint at root
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 # Make it executable
 RUN chmod +x /docker-entrypoint.sh
@@ -19,5 +19,7 @@ RUN bundle install
 
 # Copy all the app
 COPY . /app
+
+EXPOSE 3000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

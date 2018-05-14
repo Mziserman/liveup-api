@@ -15,11 +15,14 @@ class Api::V1::StreamsController < ApplicationController
   api :POST, '/v1/streams', 'Create stream'
   def create
     opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-    session = opentok.create_session
+    session = opentok.create_session archive_mode: :always, media_mode: :routed, resolution: "1280x720"
     token = session.generate_token
 
-
-    @stream = @current_user.channel&.streams&.new(session_id: session.session_id, token: token)
+    @stream = @current_user.channel&.streams&.new(stream_params)
+    if @stream
+      @stream.session_id = session.session_id
+      @stream.token = token
+    end
     if @stream.save
       render json: @stream,
         status: :created
@@ -88,7 +91,9 @@ class Api::V1::StreamsController < ApplicationController
   def stream_params
     params.require(:stream).permit(
       :channel_id,
-      :live)
+      :live,
+      :description,
+      :title)
   end
 
   def set_stream

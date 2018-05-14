@@ -11,5 +11,9 @@ if [ "$1" = 'start' ]; then
 	exec bundle exec rails s -p ${API_PORT:-3000} -b ${API_URL:-'0.0.0.0'}
 fi
 
+if [ "$1" = 'sidekiq' ]; then
+	exec bundle exec sidekiq
+fi
+
 # Execute the command
 exec "$@"

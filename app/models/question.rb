@@ -11,7 +11,15 @@ class Question < ApplicationRecord
                  score: question_votes_count,
                  content: content,
                  pseudo: user.pseudo,
-                 answers: answers)
+                 answers: answers.map {|answer|
+                  {
+                    id: answer.id,
+                    pseudo: answer.user.pseudo,
+                    score: answer.answer_votes_count,
+                    content: answer.content,
+                    user_id: answer.user_id
+                  }
+                 })
   end
 
   default_scope { order(question_votes_count: :desc) }

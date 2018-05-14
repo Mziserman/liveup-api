@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       resources :subscriptions, only: [:create, :update, :destroy]
 
       get 'credentials', to: 'shared_files#credentials'
-      resources :shared_files, only: [:create, :updSate] do
+      resources :shared_files, only: [:create, :update] do
         resources :commits, only: [:create, :update, :destroy, :show]
       end
 
