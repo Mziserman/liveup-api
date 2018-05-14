@@ -1,6 +1,6 @@
 class Api::V1::SharedFileSerializer < ActiveModel::Serializer
 
-  attributes :id
+  attributes :id,
              :name,
              :path,
              :stream_id
