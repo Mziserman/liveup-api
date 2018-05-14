@@ -2,18 +2,27 @@ default: &default
   adapter: postgresql
   encoding: utf8
   pool: 5
-  username: <%= ENV["db_name"] || "postgres" %>
-  password:
-  host: <%= ENV["db_host"] || "postgres" %>
 
 development:
   <<: *default
   database: liveup_development
+  username: <%= ENV["db_name"] || "postgres" %>
+  password:
+  host: <%= ENV["db_host"] || "postgres" %>
 
 test:
   <<: *default
   database: liveup_test
+  username: <%= ENV["db_name"] || "postgres" %>
+  password:
+  host: <%= ENV["db_host"] || "postgres" %>
 
 production:
-  <<: *default
-  database: liveup_production
+    <<: *default
+    adapter: postgresql
+    encoding: unicode
+    database: <%= ENV['RDS_DB_NAME'] %>
+    username: <%= ENV['RDS_USERNAME'] %>
+    password: <%= ENV['RDS_PASSWORD'] %>
+    host: <%= ENV['RDS_HOSTNAME'] %>
+    port: <%= ENV['RDS_PORT'] %>
