@@ -1,10 +1,15 @@
 class User < ApplicationRecord
+  rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :stripe_products
+  has_one  :stripe_plan
+  has_one  :stripe_product, through: :stripe_plan
+  
+  has_many :streams
+  has_one  :stripe_product
 
   has_many :chat_messages
   has_many :questions
@@ -23,6 +28,9 @@ class User < ApplicationRecord
   has_many :followed_channels, through: :follows, source: :channel
   has_many :followed_streamers, through: :followed_channels, source: :streamer
 
+  has_many :owned_stream_relations, class_name: "OwnedStream"
+  has_many :owned_streams, through: :owned_stream_relations, source: :stream
+
   has_many :followeds, through: :channel, source: :follows
   has_many :followed_by, through: :followeds, source: :follower
 
@@ -36,4 +44,13 @@ class User < ApplicationRecord
   def follow!(channel)
     follows.create channel: channel
   end
+
+  def self.checkCustomer(user)
+    if user.stripe_id
+      Stripe::Customer.retrieve(user.stripe_id)
+    else
+      false
+    end
+  end
+
 end

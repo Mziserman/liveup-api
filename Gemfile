@@ -20,6 +20,7 @@ gem 'figaro'
 gem 'opentok'
 gem 'apipie-rails'
 gem 'rack-cors'
+gem "rolify"
 gem 'sidekiq'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
