@@ -14,6 +14,11 @@ class Commit < ApplicationRecord
   belongs_to :shared_file
 
   before_create :create_version
+  before_create :add_file_name
+
+  def add_file_name
+    self.file_name = shared_file.name
+  end
 
   def create_version
     if shared_file.commits.last
