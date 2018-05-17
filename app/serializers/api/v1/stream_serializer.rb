@@ -15,11 +15,11 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
   end
 
   def archive
-    if @object.archive_id
-      opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-      archive = opentok.archives.find @object.archive_id
-      archive.url
-    end
+    # if @object.archive_id
+    #   opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
+    #   archive = opentok.archives.find @object.archive_id
+    #   archive.url
+    # end
   end
 
 end
