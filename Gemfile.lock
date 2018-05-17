@@ -222,6 +222,9 @@ GEM
     selenium-webdriver (3.10.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    sendinblue (2.4)
+      httparty
+      json
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
     sidekiq (5.1.3)
@@ -296,6 +299,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
+  sendinblue
   shoulda-matchers (~> 3.1)
   sidekiq
   spring
