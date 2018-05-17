@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   apipie
-  mount ActionCable.server => '/cable/:auth_token'
+  # mount ActionCable.server => '/cable/:auth_token'
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do

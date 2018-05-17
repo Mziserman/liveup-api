@@ -5,24 +5,25 @@ default: &default
 
 development:
   <<: *default
-  database: liveup_development
-  username: <%= ENV["db_name"] || "postgres" %>
-  password:
-  host: <%= ENV["db_host"] || "postgres" %>
+  database: <%= ENV['DB_NAME'] || "liveup" %>_dev
+  username: <%= ENV["DB_USERNAME"] || "postgres" %>
+  password: <%= ENV["DB_PASSWORD"] || "" %>
+  host: <%= ENV["DB_HOST"] || "localhost" %>
+  port: <%= ENV["DB_PORT"] || 5432 %>
 
 test:
   <<: *default
-  database: liveup_test
-  username: <%= ENV["db_name"] || "postgres" %>
-  password:
-  host: <%= ENV["db_host"] || "postgres" %>
+  database: <%= ENV['DB_NAME'] || "liveup" %>_test
+  username: <%= ENV["DB_USERNAME"] || "postgres" %>
+  password: <%= ENV["DB_PASSWORD"] || "" %>
+  host: <%= ENV["DB_HOST"] || "localhost" %>
+  port: <%= ENV["DB_PORT"] || 5432 %>
 
 production:
-    <<: *default
-    adapter: postgresql
-    encoding: unicode
-    database: <%= ENV['RDS_DB_NAME'] %>
-    username: <%= ENV['RDS_USERNAME'] %>
-    password: <%= ENV['RDS_PASSWORD'] %>
-    host: <%= ENV['RDS_HOSTNAME'] %>
-    port: <%= ENV['RDS_PORT'] %>
+  <<: *default
+  encoding: unicode
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV["DB_USERNAME"] || "postgres" %>
+  password: <%= ENV["DB_PASSWORD"] || "" %>
+  host: <%= ENV["DB_HOST"] || "localhost" %>
+  port: <%= ENV["DB_PORT"] || 5432 %>
