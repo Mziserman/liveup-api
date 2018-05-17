@@ -1,14 +1,7 @@
 class Commit < ApplicationRecord
 
   after_create_commit do
-    ActionCable
-      .server
-      .broadcast("stream_#{shared_file.stream_id}_commit_channel",
-                 id: id,
-                 version: version,
-                 path: path,
-                 name: name,
-                 created_at: created_at)
+    BroadcastCommitWorker.perform_async(id)
   end
 
   belongs_to :shared_file
