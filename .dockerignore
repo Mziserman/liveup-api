@@ -1,0 +1,7 @@
+.git
+.gitignore
+.env
+config/application.yml
+Dockerrun.aws.json
+.elasticbeanstalk/
+.ebextensions/

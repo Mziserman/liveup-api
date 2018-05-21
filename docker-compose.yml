@@ -1,27 +1,73 @@
 version: '3'
 
 services:
-  web:
-    build: .
-    command: start
-    ports:
-      - "3000:${API_PORT:-3000}"
-    environment:
-      - db_name=postgres
-      - db_host=postgres
-      - redis_url=redis://redis:6379/
-
   redis:
     image: redis:4.0-alpine
+    restart: always
+
+  api:
+    build: .
+    command: start
+    env_file: .env
+    depends_on:
+      - redis
+    environment:
+      - API_PORT=3000
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - REDIS_URL=redis://redis:6379
+      - tokbox_api_key=${tokbox_api_key}
+      - tokbox_api_secret=${tokbox_api_secret}
+    restart: always
 
   sidekiq:
     build: .
     command: sidekiq
+    env_file: .env
     depends_on:
-      - 'postgres'
-      - 'redis'
+      - redis
     environment:
-      - db_name=postgres
-      - db_host=postgres
-      - redis_url=redis://redis:6379/
+      - RAILS_ENV=development
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - REDIS_URL=redis://redis:6379
+    restart: always
 
+  cable:
+    build: .
+    command: cable
+    env_file: .env
+    depends_on:
+      - redis
+    environment:
+      - API_PORT=28080
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - REDIS_URL=redis://redis:6379
+    restart: always
+
+  nginx:
+    image: nginx:1.14.0
+    depends_on:
+      - api
+      - cable
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "28080:28080"
+    restart: always

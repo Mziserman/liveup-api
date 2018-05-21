@@ -3,18 +3,34 @@ version: '3'
 services:
   postgres:
     image: postgres:9.6-alpine
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-  web:
+    restart: always
+
+  api:
     depends_on:
-      - postgres
+      - 'postgres'
     environment:
-      - db_name=postgres
-      - db_host=postgres
+      - DB_NAME=liveup
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=
+      - DB_HOST=postgres
+      - DB_PORT=5432
 
   sidekiq:
     depends_on:
       - 'postgres'
     environment:
-      - db_name=postgres
-      - db_host=postgres
+      - DB_NAME=liveup
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=
+      - DB_HOST=postgres
+      - DB_PORT=5432
+
+  cable:
+    depends_on:
+      - 'postgres'
+    environment:
+      - DB_NAME=liveup
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=
+      - DB_HOST=postgres
+      - DB_PORT=5432
