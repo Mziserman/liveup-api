@@ -40,11 +40,12 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Mount Action Cable outside main process or domain
-  # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://liveup-api.herokuapp.com/cable'
-  config.action_cable.disable_request_forgery_protection = true
 
-  config.action_cable.allowed_request_origins = [ '*' ]
+  config.action_cable.url = [/ws:\/\/*/, /wss:\/\/*/]
+  config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
+
+  # config.action_cable.allowed_request_origins = [ '*' ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
