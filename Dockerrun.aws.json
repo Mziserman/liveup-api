@@ -1,20 +1,134 @@
 {
-	"AWSEBDockerrunVersion": 1,
-	"volumes": [],
- 	"containerDefinitions": [
-    	{
-			"name": "app",
-			"image": ".dkr.ecr.eu-central-1.amazonaws.com/velaluqa-test:latest",
-			"environment": [],
-			"essential": true,
-			"memory": 128,
-			"mountPoints": [],
-			"portMappings": [
-		        {
-					"containerPort": 3000,
-					"hostPort": 80
-		        }
-    		]
-    	}
-  	]
+    "AWSEBDockerrunVersion": 2,
+    "volumes": [
+      {
+        "name": "nginx-conf",
+        "host": {
+          "sourcePath": "/var/app/current/nginx/conf.d"
+        }
+      } 
+    ],
+    "containerDefinitions": [
+      {
+          "essential": true,
+          "image": "redis:4.0-alpine",
+          "name": "redis",
+          "memory": 128
+      },
+      {
+        "name": "api",
+        "image": "313471881687.dkr.ecr.eu-west-3.amazonaws.com/liveup-third-boris",
+        "environment": [
+            {
+              "name": "API_PORT",
+              "value": "3000"
+            },
+            {
+              "name": "RAILS_ENV",
+              "value": "production"
+            },
+            {
+              "name": "RACK_ENV",
+              "value": "production"
+            }
+        ],
+        "links": [
+          "redis"
+        ],
+        "essential": true,
+        "memory": 300,
+        "command": ["start"],
+        "mountPoints": [
+          {
+            "sourceVolume": "awseb-logs-api",
+            "containerPath": "/var/log/api"
+          }
+        ]
+      },
+      {
+        "name": "sidekiq",
+        "image": "313471881687.dkr.ecr.eu-west-3.amazonaws.com/liveup-third-boris",
+        "essential": true,
+        "memory": 128,
+        "command": ["sidekiq"],
+        "environment": [
+            {
+              "name": "RAILS_ENV",
+              "value": "development"
+            },
+            {
+              "name": "RACK_ENV",
+              "value": "development"
+            }
+        ],
+        "links": [
+          "redis"
+        ],
+        "portMappings": [],
+        "mountPoints": [
+          {
+            "sourceVolume": "awseb-logs-sidekiq",
+            "containerPath": "/var/log/sidekiq"
+          }
+        ]
+      },
+      {
+        "name": "cable",
+        "image": "313471881687.dkr.ecr.eu-west-3.amazonaws.com/liveup-third-boris",
+        "essential": true,
+        "memory": 300,
+        "command": ["cable"],
+        "environment": [
+            {
+              "name": "API_PORT",
+              "value": "28080"
+            },
+            {
+              "name": "RAILS_ENV",
+              "value": "production"
+            },
+            {
+              "name": "RACK_ENV",
+              "value": "production"
+            }
+        ],
+        "links": [
+          "redis"
+        ],
+        "mountPoints": [
+          {
+            "sourceVolume": "awseb-logs-cable",
+            "containerPath": "/var/log/cable"
+          }
+        ]
+      },
+      {
+        "name": "nginx",
+        "image": "nginx",
+        "links": [
+          "api",
+          "cable"
+        ],
+        "essential": true,
+        "memory": 128,
+        "portMappings": [{
+          "hostPort": 80,
+          "containerPort": 80
+        }, {
+          "hostPort": 28080,
+          "containerPort": 28080
+        }],
+        "mountPoints": [
+          {
+            "sourceVolume": "nginx-conf",
+            "containerPath": "/etc/nginx/conf.d",
+            "readOnly": true
+          },
+          {
+            "sourceVolume": "awseb-logs-nginx",
+            "containerPath": "/var/log/nginx"
+          }
+        ]
+      }
+    ]
 }
