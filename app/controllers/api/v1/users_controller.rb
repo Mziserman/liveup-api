@@ -122,7 +122,8 @@ class Api::V1::UsersController < ApplicationController
       :password_confirmation,
       :pseudo,
       :first_name,
-      :last_name)
+      :last_name,
+      :avatar)
   end
 
   def set_user
