@@ -1,0 +1,24 @@
+branch-defaults:
+  aws-setup-docker:
+    environment: liveup-api-staging
+    group_suffix: null
+  setup/sidekiq-with-docker:
+    environment: liveup-second-boris-dev2
+environment-defaults:
+  liveup-second-boris-dev:
+    branch: null
+    repository: null
+global:
+  application_name: liveup-api
+  branch: null
+  default_ec2_keyname: liveup-boris
+  default_platform: Multi-container Docker 17.12.1-ce (Generic)
+  default_region: eu-west-3
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
