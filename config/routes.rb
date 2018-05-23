@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'liked', to: 'likes#index'
 
       resources :channels, only: [:index, :create, :show, :update, :destroy] do
+        resources :streams, only: [:index]
         resources :follows, only: [:create] do
           delete '', on: :collection, action: :destroy
         end

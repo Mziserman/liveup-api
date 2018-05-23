@@ -5,7 +5,11 @@ class Api::V1::StreamsController < ApplicationController
 
   api :GET, '/v1/streams', 'List streams'
   def index
-    @streams = Stream.all
+    @streams = if params['channel_id'].present?
+      Channel.find(params['channel_id']).streams
+    else
+      Stream.all
+    end
     render json: @streams,
       status: :ok
   end
