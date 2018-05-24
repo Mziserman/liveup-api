@@ -35,11 +35,12 @@ Rails.application.routes.draw do
 
       resources :subscriptions, only: [:create, :update, :destroy]
 
-      get 'credentials', to: 'shared_files#credentials'
       resources :shared_files, only: [:create, :update] do
         resources :commits, only: [:create, :update, :destroy, :show]
       end
 
+      post 'mail_webhook', to: 'webhooks#mail_webhook'
+      get 'credentials', to: 'shared_files#credentials'
     end
   end
 end
