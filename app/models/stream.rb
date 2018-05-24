@@ -11,6 +11,8 @@ class Stream < ApplicationRecord
     end
   end
 
+  default_scope { order(created_at: :desc) }
+
   belongs_to :channel
 
   has_many :chat_messages

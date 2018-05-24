@@ -37,6 +37,7 @@ class Api::V1::StreamsController < ApplicationController
   api :GET, '/v1/streams/:id', 'Show stream'
   param :id, String, 'Stream id'
   def show
+    @stream.update view_count: @stream.view_count + 1
     render json: @stream,
       status: :ok
   end
