@@ -23,8 +23,7 @@ gem 'rack-cors'
 gem 'sidekiq'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
-gem 'sendinblue'
-
+gem 'gibbon'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
