@@ -49,6 +49,10 @@ class Api::V1::UsersController < ApplicationController
   param :pseudo, String, 'User pseudo'
   param :first_name, String, 'User first_name'
   param :last_name, String, 'User last_name'
+  param :avatar, Hash, 'avatar picture' do
+    param :file, String, 'base64 encoded string'
+    param :file_name, String, 'file name'
+  end
   def create
     @user = User.new(user_params)
     if @user.save
