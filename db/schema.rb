@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424181317) do
+ActiveRecord::Schema.define(version: 20180513155527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(version: 20180424181317) do
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["stream_id"], name: "index_answers_on_stream_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "channels", force: :cascade do |t|
@@ -117,6 +121,13 @@ ActiveRecord::Schema.define(version: 20180424181317) do
     t.index ["stream_id"], name: "index_shared_files_on_stream_id"
   end
 
+  create_table "stream_categories", force: :cascade do |t|
+    t.bigint "stream_id"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_stream_categories_on_category_id"
+    t.index ["stream_id"], name: "index_stream_categories_on_stream_id"
+  end
+
   create_table "streams", force: :cascade do |t|
     t.string "token"
     t.datetime "created_at", null: false
@@ -125,6 +136,9 @@ ActiveRecord::Schema.define(version: 20180424181317) do
     t.bigint "channel_id"
     t.integer "likes_count", default: 0
     t.boolean "live"
+    t.string "archive_id"
+    t.string "title"
+    t.string "description"
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
