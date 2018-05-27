@@ -98,7 +98,9 @@ class Api::V1::StreamsController < ApplicationController
     @stream = Stream.find(params["stream_id"])
     stop_stream(@stream.channel.aws_channel_id)
 
-    render status: :ok
+    if @stream.update(state: :off)
+      head: :no_content
+    end
   end
 
   private
