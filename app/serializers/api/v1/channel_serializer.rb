@@ -12,7 +12,7 @@ class Api::V1::ChannelSerializer < ActiveModel::Serializer
   end
 
   def stream_id
-    @object&.streams&.last&.id
+    @object&.streams&.first&.id
   end
 
 end
