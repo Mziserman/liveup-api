@@ -11,7 +11,7 @@ class Api::V1::ChannelSerializer < ActiveModel::Serializer
              :aws_input_id
 
   def is_live
-    @object&.streams&.first&.status == "live"
+    @object&.streams&.first&.state == "live"
   end
 
   def stream_id

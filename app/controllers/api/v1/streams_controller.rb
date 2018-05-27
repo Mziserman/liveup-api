@@ -99,7 +99,7 @@ class Api::V1::StreamsController < ApplicationController
     stop_stream(@stream.channel.aws_channel_id)
 
     if @stream.update(state: :off)
-      head: :no_content
+      head :no_content
     end
   end
 
