@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         resources :likes, only: [:create] do
           delete '', on: :collection, action: :destroy
         end
+        get 'state', to: 'streams#state'
+        get 'end_stream', to: 'streams#end_stream'
         resources :chat_messages, only: [:index]
         resources :shared_files, only: [:index]
         resources :commits, only: [:index]
