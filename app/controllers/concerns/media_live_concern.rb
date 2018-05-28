@@ -46,6 +46,35 @@ module MediaLiveConcern
 		}
 	end
 
+	def delete_channel_and_input(client, input_id, channel_id)
+		puts "deleting channel..."
+		client.delete_channel({channel_id: channel_id})
+		puts "channel deleted !"
+		puts "deleting input..."
+		delete_input_when_not_busy(client, input_id)
+		puts "input deleted !"
+	end
+
+	def delete_input_when_not_busy(client, input_id, time_left=20)
+		state = check_status_input(client, input_id)
+		puts "current state of input %s" % state
+		if state == "DETACHED"
+			client.delete_input({input_id: input_id})
+		else
+			sleep(3)
+			time_left -=1
+			delete_input_when_not_busy(client, input_id, time_left)
+		end
+	end
+
+	def check_status_input(client, input_id)
+		begin
+			client.describe_input({input_id: input_id}).state
+		rescue
+			"DOES_NOT_EXIST"
+		end 
+	end
+
 	def get_or_create_channel(client, user_id, endpoint_a, endpoint_b ,security_group_id, input_id, channel_id)
 		input = get_or_create_inputs(client, user_id, security_group_id, input_id)
 

@@ -46,9 +46,30 @@ module AwsStreamingConcern
 		stream
 	end
 
-	def stop_stream(channel_id)
+	def stop_stream(user_id, input_id, channel_id)
 		client = Aws::MediaLive::Client.new(CONFIG_CLIENT_AWS)
+		puts "stopping channel..."
 		client.stop_channel({channel_id: channel_id})
+		puts "channel stopped !"
+		puts "deleting stream..."
+		delete_when_stopped(client, user_id, input_id, channel_id)
+		puts "stream deleted !"
+	end
+
+	def delete_when_stopped(client, user_id, input_id, channel_id, time_left=20)
+		state = check_status_channel(channel_id)
+		puts "current state of stream is %s" % state
+		if time_left <= 0
+			raise "An error occured"
+		end
+		if state == "IDLE"
+			delete_package_channel_and_endpoint(CONFIG_CLIENT_AWS, user_id)
+			delete_channel_and_input(client, input_id, channel_id)
+		else
+			sleep(3)
+			time_left -= 1
+			delete_when_stopped(client, user_id, input_id, channel_id, time_left)
+		end
 	end
 
 	def start_when_ready(channel_id, time_left=20)
@@ -61,7 +82,7 @@ module AwsStreamingConcern
 		if state == "IDLE"
 			client.start_channel({channel_id: channel_id})
 		else
-			sleep(0.7)
+			sleep(3)
 			time_left -= 1
 			start_when_ready(channel_id, time_left)
 		end
