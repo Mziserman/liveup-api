@@ -59,7 +59,10 @@ class Api::V1::ChannelsController < ApplicationController
   def channel_params
     params.require(:channel).permit(
       :user_id,
-      :name)
+      :name,
+      :channel_type,
+      :aws_channel_id,
+      :aws_input_id)
   end
 
 

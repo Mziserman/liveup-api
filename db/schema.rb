@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513155527) do
+ActiveRecord::Schema.define(version: 20180527134109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,9 @@ ActiveRecord::Schema.define(version: 20180513155527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "channel_type", default: 0
+    t.string "aws_channel_id"
+    t.string "aws_input_id"
     t.index ["streamer_id"], name: "index_channels_on_streamer_id"
   end
 
@@ -139,6 +142,10 @@ ActiveRecord::Schema.define(version: 20180513155527) do
     t.string "archive_id"
     t.string "title"
     t.string "description"
+    t.integer "view_count", default: 0
+    t.integer "state", default: 0
+    t.string "output_stream_url"
+    t.string "input_stream_url"
     t.index ["channel_id"], name: "index_streams_on_channel_id"
   end
 
