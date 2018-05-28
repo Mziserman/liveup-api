@@ -7,8 +7,7 @@ module MediaPackageConcern
 		client_package = Aws::MediaPackage::Client.new(config_client)
 		client_parameters_store = Aws::SSM::Client.new(config_client)
 
-		id_a = "%s-LiveupChannelA" % user_id
-		id_b = "%s-LiveupChannelB" % user_id
+		id_a, id_b = get_ids_package_channel(user_id)
 
 		puts "creating package destination %s and %s..." % [id_a, id_b]
 
@@ -58,6 +57,36 @@ module MediaPackageConcern
 			password_param: password_param,
 			url: response.hls_ingest.ingest_endpoints.first.url,
 		}
+	end
+
+	def delete_package_channel_and_endpoint(config_client, user_id)
+		client = Aws::MediaPackage::Client.new(config_client)
+
+		id_a, id_b = get_ids_package_channel(user_id)
+
+		endpoint_a = get_ids_package_endpoint(id_a)
+		endpoint_b = get_ids_package_endpoint(id_b)
+
+		puts "deleting package endpoints ..."
+		client.delete_origin_endpoint({id: endpoint_a})
+		client.delete_origin_endpoint({id: endpoint_b})
+
+		puts "package endpoints deleted !"
+		puts "deleting package channels..."
+		client.delete_channel({id: id_a})
+		client.delete_channel({id: id_b})
+		puts "package channels deleted !"
+	end
+
+	def get_ids_package_channel(user_id)
+		[
+			id_a = "%s-LiveupChannelA" % user_id,
+			id_b = "%s-LiveupChannelB" % user_id
+		]
+	end
+
+	def get_ids_package_endpoint(channel_id)
+		"%sEndpoint" % channel_id
 	end
 
 	def create_package_endpoint(client, channel_id)

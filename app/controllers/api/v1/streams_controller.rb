@@ -95,8 +95,9 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def end_stream
+    channel = @current_user.channel
     @stream = Stream.find(params["stream_id"])
-    stop_stream(@stream.channel.aws_channel_id)
+    stop_stream(@current_user.id, @stream.channel.aws_input_id, @stream.channel.aws_channel_id)
 
     if @stream.update(state: :off)
       head :no_content
