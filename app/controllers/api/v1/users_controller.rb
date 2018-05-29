@@ -52,8 +52,10 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      auth_token = ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
       render json: @user,
-        status: :created
+        serializer: Api::V1::UserSerializer,
+        auth_token: auth_token
     else
       render json: @user.errors,
         status: :bad_request
