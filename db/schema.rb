@@ -37,10 +37,6 @@ ActiveRecord::Schema.define(version: 20180527134109) do
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-  end
-
   create_table "channels", force: :cascade do |t|
     t.string "name"
     t.bigint "streamer_id"
@@ -122,13 +118,6 @@ ActiveRecord::Schema.define(version: 20180527134109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["stream_id"], name: "index_shared_files_on_stream_id"
-  end
-
-  create_table "stream_categories", force: :cascade do |t|
-    t.bigint "stream_id"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_stream_categories_on_category_id"
-    t.index ["stream_id"], name: "index_stream_categories_on_stream_id"
   end
 
   create_table "streams", force: :cascade do |t|
