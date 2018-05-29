@@ -25,11 +25,11 @@
             },
             {
               "name": "RAILS_ENV",
-              "value": "production"
+              "value": "development"
             },
             {
               "name": "RACK_ENV",
-              "value": "production"
+              "value": "development"
             }
         ],
         "links": [
@@ -85,11 +85,11 @@
             },
             {
               "name": "RAILS_ENV",
-              "value": "production"
+              "value": "development"
             },
             {
               "name": "RACK_ENV",
-              "value": "production"
+              "value": "development"
             }
         ],
         "links": [
