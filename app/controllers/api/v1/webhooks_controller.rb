@@ -19,8 +19,7 @@ class Api::V1::WebhooksController < ApplicationController
 		else 
 			render json: {error: 'Email field missing'}
 		end
-	else
-		render json: {error: 'Domain not authorized'}
+	
 	end
 
 end
