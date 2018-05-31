@@ -17,14 +17,14 @@ module MediaPackageConcern
 			  id: id_a,
 			})
 
-			create_package_endpoint(client_package, resp_a.id)
+			endpoint_a = create_package_endpoint(client_package, resp_a.id)
 
 			resp_b = client_package.create_channel({
 			  description: "Channel package B for %s" % user_pseudo,
 			  id: id_b,
 			})
 
-			create_package_endpoint(client_package, resp_b.id)
+			endpoint_b = create_package_endpoint(client_package, resp_b.id)
 
 			puts "package destination created !"
 
@@ -47,15 +47,19 @@ module MediaPackageConcern
 			resp_b.hls_ingest.ingest_endpoints.first.password
 		)
 
-		[format_package_channel_response(resp_a, password_param_a), format_package_channel_response(resp_b, password_param_b)]
+		[
+			format_package_channel_response(resp_a, password_param_a, endpoint_a.url), 
+			format_package_channel_response(resp_b, password_param_b, endpoint_b.url)
+		]
 	end
 
-	def format_package_channel_response(response, password_param)
+	def format_package_channel_response(response, password_param, endpoint_output)
 		{
 			id: response.id,
 			username: response.hls_ingest.ingest_endpoints.first.username,
 			password_param: password_param,
 			url: response.hls_ingest.ingest_endpoints.first.url,
+			endpoint_output: endpoint_output
 		}
 	end
 

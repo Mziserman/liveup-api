@@ -31,7 +31,7 @@ module AwsStreamingConcern
 		{
 			channel_id: _channel[:channel_id],
 			input_id: _channel[:input_id],
-			output_stream_url: _destinations[0][:url],
+			output_stream_url: _destinations[0][:endpoint_output],
 			input_stream_url: _channel[:destination_url]
 		}
 	end

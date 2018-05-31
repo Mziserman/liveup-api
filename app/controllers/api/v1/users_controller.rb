@@ -53,9 +53,12 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auth_token = ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
+      refresh_token = ::JsonWebToken.encode(user_id: @user.id, exp: 1.year.from_now.to_i)
+      @user.update(refresh_token: refresh_token)
       render json: @user,
         serializer: Api::V1::UserSerializer,
-        auth_token: auth_token
+        auth_token: auth_token,
+        refresh_token: refresh_token
     else
       render json: @user.errors,
         status: :bad_request
