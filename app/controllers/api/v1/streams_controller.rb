@@ -2,7 +2,7 @@ class Api::V1::StreamsController < ApplicationController
   include AwsStreamingConcern
   before_action :authenticate_request!, except: [:index, :show]
   before_action :set_stream, only: [:show, :edit, :update, :destroy, :follow, :upvoted_questions]
-  before_action :authorize_user!, except: [:index, :create, :show, :follow, :upvoted_questions, :state, :end_stream]
+  before_action :authorize_user!, except: [:index, :create, :show, :follow, :upvoted_questions, :state, :end_stream, :rediffusion]
 
   api :GET, '/v1/streams', 'List streams'
   def index
