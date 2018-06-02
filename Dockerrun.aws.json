@@ -6,7 +6,7 @@
         "host": {
           "sourcePath": "/var/app/current/nginx/conf.d"
         }
-      } 
+      }
     ],
     "containerDefinitions": [
       {
@@ -25,11 +25,11 @@
             },
             {
               "name": "RAILS_ENV",
-              "value": "development"
+              "value": "production"
             },
             {
               "name": "RACK_ENV",
-              "value": "development"
+              "value": "production"
             }
         ],
         "links": [
@@ -54,11 +54,11 @@
         "environment": [
             {
               "name": "RAILS_ENV",
-              "value": "development"
+              "value": "production"
             },
             {
               "name": "RACK_ENV",
-              "value": "development"
+              "value": "production"
             }
         ],
         "links": [
@@ -85,11 +85,11 @@
             },
             {
               "name": "RAILS_ENV",
-              "value": "development"
+              "value": "production"
             },
             {
               "name": "RACK_ENV",
-              "value": "development"
+              "value": "production"
             }
         ],
         "links": [
