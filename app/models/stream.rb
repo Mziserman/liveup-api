@@ -8,13 +8,24 @@ class Stream < ApplicationRecord
   has_many :commits, through: :shared_file
   has_many :questions
 
+  has_many :view_counts
+
   has_many :likes
   has_many :liked_by, through: :likes, source: :user
 
   default_scope { order(created_at: :desc) }
 
-  after_update :create_archive
+  def view_count
+    view_counts&.last&.count || 0
+  end
 
+  after_create_commit :create_view_count
+  def create_view_count
+    view_counts.create
+  end
+
+
+  after_update :create_archive
   def create_archive
     if saved_change_to_live? && live
       opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]

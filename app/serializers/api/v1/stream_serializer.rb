@@ -18,6 +18,10 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
     @object.likes_count
   end
 
+  def view_count
+    @object.view_count
+  end
+
   def archive
     # if @object.archive_id
     #   opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]

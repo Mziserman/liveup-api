@@ -21,7 +21,7 @@ class Api::V1::StreamsController < ApplicationController
 
     if channel.channel_type == "tokbox"
       opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-      session = opentok.create_session media_mode: :routed, resolution: "1280x720"
+      session = opentok.create_session media_mode: :routed, resolution: "1280x720", :archive_mode => :always
       token = session.generate_token
 
       @stream = channel&.streams&.new(stream_params)
@@ -63,7 +63,6 @@ class Api::V1::StreamsController < ApplicationController
   api :GET, '/v1/streams/:id', 'Show stream'
   param :id, String, 'Stream id'
   def show
-    @stream.update view_count: @stream.view_count + 1
     render json: @stream,
       status: :ok
   end
