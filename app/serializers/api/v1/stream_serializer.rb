@@ -6,6 +6,7 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
              :channel_id,
              :session_id,
              :view_count,
+             :rediffusion_view_count,
              :token,
              :likes,
              :live?,

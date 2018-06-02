@@ -103,6 +103,12 @@ class Api::V1::StreamsController < ApplicationController
     end
   end
 
+  def rediffusion
+    @stream = Stream.find(params["stream_id"])
+    @stream.update(rediffusion_view_count: @stream.rediffusion_view_count + 1)
+    render json: @stream
+  end
+
   private
 
   def stream_params

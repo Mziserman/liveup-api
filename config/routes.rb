@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         end
         get 'state', to: 'streams#state'
         get 'end_stream', to: 'streams#end_stream'
+        get 'rediffusion', to: 'streams#rediffusion'
         resources :chat_messages, only: [:index]
         resources :shared_files, only: [:index]
         resources :commits, only: [:index]
