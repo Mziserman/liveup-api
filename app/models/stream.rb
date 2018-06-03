@@ -19,6 +19,10 @@ class Stream < ApplicationRecord
     view_counts&.last&.count || 0
   end
 
+  def total_view_count
+    view_counts&.last&.total_count || 0
+  end
+
   after_create_commit :create_view_count
   def create_view_count
     view_counts.create
