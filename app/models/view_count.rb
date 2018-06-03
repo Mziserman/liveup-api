@@ -9,6 +9,7 @@ class ViewCount < ApplicationRecord
       .server
       .broadcast("stream_#{stream_id}_view_count_channel",
                  created_at: created_at,
-                 count: count)
+                 count: count,
+                 total_count: total_count)
   end
 end

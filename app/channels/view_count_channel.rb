@@ -9,6 +9,6 @@ class ViewCountChannel < ApplicationCable::Channel
 
   def unsubscribed
     stream = Stream.find(params[:stream_id])
-    stream.view_counts.create(count: stream.view_count - 1)
+    stream.view_counts.create(count: stream.view_count - 1, total_count: stream.total_view_count)
   end
 end
