@@ -4,7 +4,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
   api :GET, '/v1/shared_files/credentials', 'Get Credentials'
   def credentials
-    sts = Aws::STS::Client.new()
+    sts = Aws::STS::Client.new(region: 'eu-west-3')
 
     @resp = sts.get_session_token()
 

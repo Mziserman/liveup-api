@@ -81,7 +81,7 @@ module AwsStreamingConcern
 		end
 		if state == "IDLE"
 			client.start_channel({channel_id: channel_id})
-		else
+		elsif state != "RUNNING" && state != "STARTING"
 			sleep(3)
 			time_left -= 1
 			start_when_ready(channel_id, time_left)

@@ -18,7 +18,7 @@ module MediaPackageConcern
 			})
 
 			endpoint_a = create_package_endpoint(client_package, resp_a.id)
-
+			
 			resp_b = client_package.create_channel({
 			  description: "Channel package B for %s" % user_pseudo,
 			  id: id_b,
@@ -32,6 +32,28 @@ module MediaPackageConcern
 
 			resp_a = client_package.describe_channel({id: id_a})
 			resp_b = client_package.describe_channel({id: id_b})
+
+			resp_endpoint_a = client_package.list_origin_endpoints({
+			  channel_id: id_a,
+			  max_results: 1
+			})
+
+			if resp_endpoint_a.origin_endpoints[0]
+				endpoint_a = resp_endpoint_a.origin_endpoints[0]
+			else
+				endpoint_a = create_package_endpoint(client_package, resp_a.id)
+			end
+
+			resp_endpoint_b = client_package.list_origin_endpoints({
+			  channel_id: id_b,
+			  max_results: 1
+			})
+
+			if resp_endpoint_b.origin_endpoints[0]
+				endpoint_b = resp_endpoint_b.origin_endpoints[0]
+			else
+				endpoint_b = create_package_endpoint(client_package, resp_b.id)
+			end
 
 			puts "package destination found !"
 		end
