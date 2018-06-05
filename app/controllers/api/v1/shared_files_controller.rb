@@ -20,7 +20,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
     @file = SharedFile.create(share_file_params)
 
-    @current_user.streams.last.shared_file = @file
+    @current_user.streams.order('created_at DESC').last.shared_file = @file
 
     if @file.save
       render json: @file
