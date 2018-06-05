@@ -17,7 +17,7 @@ gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'stripe'
 gem 'figaro'
-gem 'opentok'
+gem 'opentok', "~> 3.0.1"
 gem 'apipie-rails'
 gem 'rack-cors'
 gem 'sidekiq'
