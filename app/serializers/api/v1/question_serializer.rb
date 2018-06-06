@@ -5,6 +5,7 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
              :score,
              :pseudo,
              :answers,
+             :color,
              :user_id,
              :created_at
 
@@ -20,6 +21,10 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
     @object.answers.map do |answer|
       ::Api::V1::AnswerSerializer.new(answer, scope: scope, root: false)
     end
+  end
+
+  def color
+    @object.user.color
   end
 
 end

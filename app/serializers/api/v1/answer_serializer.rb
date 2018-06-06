@@ -4,6 +4,7 @@ class Api::V1::AnswerSerializer < ActiveModel::Serializer
              :content,
              :score,
              :pseudo,
+             :color,
              :user_id,
              :created_at
 
@@ -13,6 +14,10 @@ class Api::V1::AnswerSerializer < ActiveModel::Serializer
 
   def pseudo
     @object.user.pseudo
+  end
+
+  def color
+    @object.user.color
   end
 
 end

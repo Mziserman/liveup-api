@@ -11,10 +11,12 @@ class Question < ApplicationRecord
                  score: question_votes_count,
                  content: content,
                  pseudo: user.pseudo,
+                 color: user.color,
                  answers: answers.map {|answer|
                   {
                     id: answer.id,
                     pseudo: answer.user.pseudo,
+                    color: answer.user.color,
                     score: answer.answer_votes_count,
                     content: answer.content,
                     user_id: answer.user_id
