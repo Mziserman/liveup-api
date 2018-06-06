@@ -17,7 +17,7 @@ gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'stripe'
 gem 'figaro'
-gem 'opentok'
+gem 'opentok', "~> 3.0.2"
 gem 'apipie-rails'
 gem 'rack-cors'
 gem 'sidekiq'
@@ -25,6 +25,7 @@ gem 'redis'
 gem 'aws-sdk', '~> 2'
 gem 'carrierwave', '~> 1.0'
 gem "fog-aws"
+gem 'gibbon'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

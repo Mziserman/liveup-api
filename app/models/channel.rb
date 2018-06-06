@@ -11,6 +11,8 @@ class Channel < ApplicationRecord
 
   before_validation :set_slug
 
+  enum channel_type: { tokbox: 0, aws: 1 }
+
   def set_slug
     self.slug = name.parameterize
   end

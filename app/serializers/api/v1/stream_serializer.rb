@@ -5,13 +5,25 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
              :description,
              :channel_id,
              :session_id,
+             :view_count,
+             :total_view_count,
+             :rediffusion_view_count,
              :token,
              :likes,
              :live?,
-             :archive
+             :archive,
+             :output_stream_url,
+             :input_stream_url,
+             :state,
+             :thumbnail,
+             :category
 
   def likes
     @object.likes_count
+  end
+
+  def view_count
+    @object.view_count
   end
 
   def archive

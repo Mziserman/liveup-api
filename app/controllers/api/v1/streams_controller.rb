@@ -1,32 +1,62 @@
 class Api::V1::StreamsController < ApplicationController
-  before_action :authenticate_request!, except: [:index, :show]
+  include AwsStreamingConcern
+  before_action :authenticate_request!, except: [:index, :show, :rediffusion]
   before_action :set_stream, only: [:show, :edit, :update, :destroy, :follow, :upvoted_questions]
-  before_action :authorize_user!, except: [:index, :create, :show, :follow, :upvoted_questions]
+  before_action :authorize_user!, except: [:index, :create, :show, :follow, :upvoted_questions, :state, :end_stream, :rediffusion]
 
   api :GET, '/v1/streams', 'List streams'
   def index
-    @streams = Stream.all
+    @streams = if params['channel_id'].present?
+      Channel.find(params['channel_id']).streams
+    else
+      Stream.all
+    end
     render json: @streams,
       status: :ok
   end
 
   api :POST, '/v1/streams', 'Create stream'
   def create
-    opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-    session = opentok.create_session media_mode: :routed, resolution: "1280x720"
-    token = session.generate_token
+    channel = @current_user.channel
 
-    @stream = @current_user.channel&.streams&.new(stream_params)
-    if @stream
-      @stream.session_id = session.session_id
-      @stream.token = token
-    end
-    if @stream.save
-      render json: @stream,
-        status: :created
+    if channel.channel_type == "tokbox"
+      opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
+      session = opentok.create_session media_mode: :routed, resolution: "1280x720", :archive_mode => :always
+      token = session.generate_token
+
+      @stream = channel&.streams&.new(stream_params)
+      if @stream
+        @stream.session_id = session.session_id
+        @stream.token = token
+      end
+      if @stream.save
+        render json: @stream,
+          status: :created
+      else
+        render json: @stream.errors,
+          status: :bad_request
+      end
     else
-      render json: @stream.errors,
-        status: :bad_request
+      if channel.aws_input_id && channel.aws_channel_id
+        aws_stream_object = start_stream(@current_user.id, channel.aws_input_id, channel.aws_channel_id)
+      else
+        aws_stream_object = start_stream(@current_user.id)
+      end
+
+      @stream = channel&.streams&.new(stream_params)
+      if channel && @stream
+        @stream.output_stream_url = aws_stream_object[:output_stream_url]
+        @stream.input_stream_url = aws_stream_object[:input_stream_url]
+        channel.aws_channel_id = aws_stream_object[:channel_id]
+        channel.aws_input_id = aws_stream_object[:input_id]
+      end
+      if @stream.save && channel.save
+        render json: @stream,
+          status: :created
+      else
+        render json: @stream.errors,
+          status: :bad_request
+      end
     end
   end
 
@@ -56,14 +86,38 @@ class Api::V1::StreamsController < ApplicationController
     head :no_content
   end
 
+  def state
+    @stream = Stream.find(params["stream_id"])
+    state = check_status_channel(@stream.channel.aws_channel_id)
+
+    render json: {state: state}
+  end
+
+  def end_stream
+    channel = @current_user.channel
+    @stream = Stream.find(params["stream_id"])
+    stop_stream(@current_user.id, @stream.channel.aws_input_id, @stream.channel.aws_channel_id)
+
+    if @stream.update(state: :off)
+      head :no_content
+    end
+  end
+
+  def rediffusion
+    @stream = Stream.find(params["stream_id"])
+    @stream.update(rediffusion_view_count: @stream.rediffusion_view_count + 1)
+    render json: @stream
+  end
+
   private
 
   def stream_params
     params.require(:stream).permit(
       :channel_id,
-      :live,
+      :state,
       :description,
-      :title)
+      :title,
+      :category)
   end
 
 

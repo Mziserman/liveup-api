@@ -4,7 +4,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
   api :GET, '/v1/shared_files/credentials', 'Get Credentials'
   def credentials
-    sts = Aws::STS::Client.new()
+    sts = Aws::STS::Client.new(region: 'eu-west-3')
 
     @resp = sts.get_session_token()
 
@@ -20,7 +20,7 @@ class Api::V1::SharedFilesController < ApplicationController
 
     @file = SharedFile.create(share_file_params)
 
-    @current_user.streams.last.shared_file = @file
+    @current_user.streams.order('created_at ASC').first.shared_file = @file
 
     if @file.save
       render json: @file

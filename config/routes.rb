@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'liked', to: 'likes#index'
 
       resources :channels, only: [:index, :create, :show, :update, :destroy] do
+        resources :streams, only: [:index]
         resources :follows, only: [:create] do
           delete '', on: :collection, action: :destroy
         end
@@ -24,6 +25,9 @@ Rails.application.routes.draw do
         resources :likes, only: [:create] do
           delete '', on: :collection, action: :destroy
         end
+        get 'state', to: 'streams#state'
+        get 'end_stream', to: 'streams#end_stream'
+        get 'rediffusion', to: 'streams#rediffusion'
         resources :chat_messages, only: [:index]
         resources :shared_files, only: [:index]
         resources :commits, only: [:index]
@@ -35,11 +39,12 @@ Rails.application.routes.draw do
 
       resources :subscriptions, only: [:create, :update, :destroy]
 
-      get 'credentials', to: 'shared_files#credentials'
       resources :shared_files, only: [:create, :update] do
         resources :commits, only: [:create, :update, :destroy, :show]
       end
 
+      post 'mail_webhook', to: 'webhooks#mail_webhook'
+      get 'credentials', to: 'shared_files#credentials'
     end
   end
 end

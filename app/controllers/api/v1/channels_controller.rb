@@ -1,7 +1,7 @@
 class Api::V1::ChannelsController < ApplicationController
   before_action :authenticate_request!, except: [:index, :show]
-  before_action :authorize_user!, except: [:index, :create, :show]
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, except: [:index, :create, :show]
 
   api :GET, '/v1/channels', 'List channels'
   def index
@@ -59,15 +59,20 @@ class Api::V1::ChannelsController < ApplicationController
   def channel_params
     params.require(:channel).permit(
       :user_id,
-      :name)
+      :name,
+      :channel_type,
+      :aws_channel_id,
+      :aws_input_id)
   end
 
 
   def set_channel
     @channel = Channel.find_by(slug: params[:id])
+    puts @channel
   end
 
   def authorize_user!
+    puts params
     if @current_user != @channel.streamer
       return head :unauthorized
     end
