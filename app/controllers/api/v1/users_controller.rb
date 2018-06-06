@@ -49,6 +49,7 @@ class Api::V1::UsersController < ApplicationController
   param :pseudo, String, 'User pseudo'
   param :first_name, String, 'User first_name'
   param :last_name, String, 'User last_name'
+  param :avatar, String, 'base64 string'
   def create
     gibbon = Gibbon::Request.new(api_key: ENV["MAILCHIMP_KEY"])
 
@@ -145,7 +146,8 @@ class Api::V1::UsersController < ApplicationController
       :password_confirmation,
       :pseudo,
       :first_name,
-      :last_name)
+      :last_name,
+      :avatar)
   end
 
   def set_user

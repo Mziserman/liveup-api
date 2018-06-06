@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  mount_base64_uploader :avatar, AvatarUploader
+
   has_many :stripe_products
 
   has_many :chat_messages

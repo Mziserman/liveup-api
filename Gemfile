@@ -23,7 +23,10 @@ gem 'rack-cors'
 gem 'sidekiq'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
+gem 'carrierwave', '~> 1.0'
+gem "fog-aws"
 gem 'gibbon'
+gem 'carrierwave-base64'
 gem 'sentry-raven'
 
 group :development, :test do
