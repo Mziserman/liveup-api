@@ -27,6 +27,7 @@ gem 'carrierwave', '~> 1.0'
 gem "fog-aws"
 gem 'gibbon'
 gem 'carrierwave-base64'
+gem 'sentry-raven'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

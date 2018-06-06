@@ -66,4 +66,9 @@ Rails.application.configure do
   config.logger = Logger.new(STDOUT)
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  Raven.configure do |config|
+    config.dsn = 'https://6434d711fd7444978ab583912cbc7f8a:8a475c47e384484e827f8d44f4e35261@sentry.io/1220080'
+  end
+
 end
