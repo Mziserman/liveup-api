@@ -15,7 +15,8 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
              :output_stream_url,
              :input_stream_url,
              :state,
-             :thumbnail
+             :thumbnail,
+             :category
 
   def likes
     @object.likes_count

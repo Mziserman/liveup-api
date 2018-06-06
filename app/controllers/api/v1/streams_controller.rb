@@ -116,7 +116,8 @@ class Api::V1::StreamsController < ApplicationController
       :channel_id,
       :state,
       :description,
-      :title)
+      :title,
+      :category)
   end
 
 
