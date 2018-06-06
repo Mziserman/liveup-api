@@ -5,11 +5,20 @@ branch-defaults:
   feature/aws_streaming:
     environment: liveup-staging
   master:
-    environment: liveup-api-prod
+    environment: liveup-api-staging2
     group_suffix: null
   setup/sidekiq-with-docker:
     environment: liveup-second-boris-dev2
 environment-defaults:
+  liveup-api-prod:
+    branch: null
+    repository: null
+  liveup-api-staging:
+    branch: null
+    repository: null
+  liveup-api-staging-new:
+    branch: null
+    repository: null
   liveup-second-boris-dev:
     branch: null
     repository: null
@@ -17,7 +26,7 @@ environment-defaults:
     branch: null
     repository: null
 global:
-  application_name: liveup-api-prod
+  application_name: '1'
   branch: null
   default_ec2_keyname: liveup-api
   default_platform: Multi-container Docker 17.12.1-ce (Generic)
