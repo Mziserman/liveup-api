@@ -5,6 +5,7 @@ class ChatMessage < ApplicationRecord
       .broadcast("stream_#{stream_id}_chat_channel",
                  id: id,
                  user_id: user_id,
+                 color: user.color,
                  created_at: created_at,
                  content: content,
                  pseudo: user.pseudo)

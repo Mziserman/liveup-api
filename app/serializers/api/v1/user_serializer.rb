@@ -5,7 +5,8 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
              :channel_slug,
              :first_name,
              :last_name,
-             :pseudo
+             :pseudo,
+             :color
 
   attribute :auth_token, if: -> { instance_options[:auth_token].present? }
 
