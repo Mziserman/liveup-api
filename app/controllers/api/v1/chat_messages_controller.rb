@@ -3,7 +3,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   api :GET, '/v1/streams/:id/chat_messages', 'ChatMessage index'
   def index
-    @chat_messages = @stream.chat_messages
+    @chat_messages = @stream.chat_messages.last(150)
     render json: @chat_messages
   end
 
