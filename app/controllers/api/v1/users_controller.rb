@@ -50,8 +50,26 @@ class Api::V1::UsersController < ApplicationController
   param :first_name, String, 'User first_name'
   param :last_name, String, 'User last_name'
   def create
+    gibbon = Gibbon::Request.new(api_key: ENV["MAILCHIMP_KEY"])
+
     @user = User.new(user_params)
     if @user.save
+
+      begin
+        gibbon
+        .lists(ENV["MAILCHIMP_LIST_ID"])
+        .members
+        .create(
+          body: 
+          {
+            email_address: @user.email,
+            status: "subscribed", 
+          }
+        )
+      rescue
+        puts 'User already exists'
+      end
+
       auth_token = ::JsonWebToken.encode(user_id: @user.id, exp: 6.hours.from_now.to_i)
       refresh_token = ::JsonWebToken.encode(user_id: @user.id, exp: 1.year.from_now.to_i)
       @user.update(refresh_token: refresh_token)
