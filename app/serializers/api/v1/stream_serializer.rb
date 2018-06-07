@@ -11,7 +11,7 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
              :token,
              :likes,
              :live?,
-             :archive,
+             :archive_url,
              :output_stream_url,
              :input_stream_url,
              :state,
@@ -24,14 +24,6 @@ class Api::V1::StreamSerializer < ActiveModel::Serializer
 
   def view_count
     @object.view_count
-  end
-
-  def archive
-    # if @object.archive_id
-    #   opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-    #   archive = opentok.archives.find @object.archive_id
-    #   archive.url
-    # end
   end
 
 end
