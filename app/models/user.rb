@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   mount_base64_uploader :avatar, AvatarUploader
 
+  validates :pseudo, uniqueness: true
+  validates :pseudo, presence: true
+
   has_many :stripe_products
 
   has_many :chat_messages
