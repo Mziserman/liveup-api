@@ -36,7 +36,7 @@ class User < ApplicationRecord
 
   before_create :set_color
   def set_color
-    self.color = ["#524c84", "#d65d7a", "#fff9af", "#92e6e6"].sample
+    self.color = ["#524c84", "#d65d7a", "#ff7517", "#92e6e6"].sample
   end
 
   def like_stream!(stream)
