@@ -28,25 +28,6 @@ services:
     tty: true
     stdin_open: true
 
-
-  sidekiq:
-    build: .
-    command: sidekiq
-    env_file: .env
-    depends_on:
-      - redis
-    environment:
-      - RAILS_ENV=development
-      - RACK_ENV=development
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - DB_NAME=${DB_NAME}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - REDIS_URL=redis://redis:6379
-    restart: always
-
   cable:
     build: .
     command: cable

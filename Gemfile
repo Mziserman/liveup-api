@@ -20,7 +20,6 @@ gem 'figaro'
 gem 'opentok', "~> 3.0.2"
 gem 'apipie-rails'
 gem 'rack-cors'
-gem 'sidekiq'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
 gem 'carrierwave', '~> 1.0'

@@ -46,33 +46,6 @@
         ]
       },
       {
-        "name": "sidekiq",
-        "image": "313471881687.dkr.ecr.eu-west-3.amazonaws.com/liveup-third-boris",
-        "essential": true,
-        "memory": 128,
-        "command": ["sidekiq"],
-        "environment": [
-            {
-              "name": "RAILS_ENV",
-              "value": "production"
-            },
-            {
-              "name": "RACK_ENV",
-              "value": "production"
-            }
-        ],
-        "links": [
-          "redis"
-        ],
-        "portMappings": [],
-        "mountPoints": [
-          {
-            "sourceVolume": "awseb-logs-sidekiq",
-            "containerPath": "/var/log/sidekiq"
-          }
-        ]
-      },
-      {
         "name": "cable",
         "image": "313471881687.dkr.ecr.eu-west-3.amazonaws.com/liveup-third-boris",
         "essential": true,
