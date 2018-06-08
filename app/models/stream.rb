@@ -31,13 +31,13 @@ class Stream < ApplicationRecord
 
   after_update :create_archive
   def create_archive
-    if saved_change_to_live? && live
+    if self.live?
       ActionCable
         .server
         .broadcast("stream_#{id}_stream_channel",
           event: "live",
           live: true)
-    elsif saved_change_to_live? && !live
+    elsif !self.live?
       ActionCable
         .server
         .broadcast("stream_#{id}_stream_channel",
