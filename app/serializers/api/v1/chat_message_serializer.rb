@@ -5,10 +5,15 @@ class Api::V1::ChatMessageSerializer < ActiveModel::Serializer
              :pseudo,
              :color,
              :user_id,
+             :avatar,
              :created_at
 
   def pseudo
     @object.user.pseudo
+  end
+
+  def avatar
+    @object.user.avatar.url
   end
 
   def color

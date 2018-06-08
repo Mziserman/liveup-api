@@ -6,6 +6,7 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
              :pseudo,
              :answers,
              :color,
+             :avatar,
              :user_id,
              :created_at
 
@@ -15,6 +16,10 @@ class Api::V1::QuestionSerializer < ActiveModel::Serializer
 
   def pseudo
     @object.user.pseudo
+  end
+
+  def avatar
+    @object.user.avatar.url
   end
 
   def answers
