@@ -8,6 +8,7 @@ class ChatMessage < ApplicationRecord
                  color: user.color,
                  created_at: created_at,
                  content: content,
+                 avatar: user.avatar.url,
                  pseudo: user.pseudo)
   end
 

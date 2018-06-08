@@ -12,6 +12,7 @@ class Question < ApplicationRecord
                  content: content,
                  pseudo: user.pseudo,
                  color: user.color,
+                 avatar: user.avatar.url,
                  answers: answers.map {|answer|
                   {
                     id: answer.id,

@@ -10,8 +10,7 @@ class ChatChannel < ApplicationCable::Channel
     ChatMessage.create(
       content: options.fetch('content'),
       stream_id: params[:stream_id],
-      user: current_user,
-      avatar: avatar.url
+      user: current_user
     )
   end
 end

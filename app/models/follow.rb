@@ -9,6 +9,7 @@ class Follow < ApplicationRecord
       .server
       .broadcast("stream_#{stream.id}_streamer_channel",
         event: "follow",
+        avatar: user.avatar.url,
         pseudo: follower.pseudo,
         color: follower.color)
   end
@@ -21,6 +22,7 @@ class Follow < ApplicationRecord
       .broadcast("stream_#{stream.id}_streamer_channel",
         event: "unfollow",
         pseudo: follower.pseudo,
+        avatar: user.avatar.url,
         color: follower.color)
   end
 end

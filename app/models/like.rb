@@ -10,6 +10,7 @@ class Like < ApplicationRecord
       .server
       .broadcast("stream_#{stream_id}_streamer_channel",
         event: "like",
+        avatar: user.avatar.url,
         pseudo: user.pseudo,
         color: user.color)
   end
@@ -21,6 +22,7 @@ class Like < ApplicationRecord
       .broadcast("stream_#{stream_id}_streamer_channel",
         event: "unlike",
         pseudo: user.pseudo,
+        avatar: user.avatar.url,
         color: user.color)
   end
 end
