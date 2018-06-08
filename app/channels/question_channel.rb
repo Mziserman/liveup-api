@@ -10,7 +10,8 @@ class QuestionChannel < ApplicationCable::Channel
     Question.create(
       content: options.fetch('content'),
       stream_id: params[:stream_id],
-      user: current_user
+      user: current_user,
+      avatar: current_user.avatar.url
     )
   end
 
@@ -19,7 +20,8 @@ class QuestionChannel < ApplicationCable::Channel
       content: options.fetch('content'),
       question_id: options.fetch('question_id'),
       stream_id: params[:stream_id],
-      user: current_user
+      user: current_user,
+      avatar: current_user.avatar.url
     )
   end
 
