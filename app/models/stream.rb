@@ -32,11 +32,18 @@ class Stream < ApplicationRecord
   after_update :create_archive
   def create_archive
     if saved_change_to_live? && live
-      opentok = OpenTok::OpenTok.new ENV["tokbox_api_key"], ENV["tokbox_api_secret"]
-      archive = opentok.archives.create session_id, {
-        resolution: "1280x720",
-        name: title
-      }
+      ActionCable
+        .server
+        .broadcast("stream_#{id}_stream_channel",
+          event: "live",
+          live: true)
+    elsif saved_change_to_live? && !live
+      ActionCable
+        .server
+        .broadcast("stream_#{id}_stream_channel",
+          event: "live",
+          live: false)
     end
   end
+
 end
