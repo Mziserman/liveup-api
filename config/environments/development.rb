@@ -32,11 +32,12 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp-relay.sendinblue.com',
+    :address => 'smtp.gmail.com',
     :port => 587,
-    :user_name => 'martinziserman@gmail.com',
-    :password => 'k53zqyjLCRwdVt61',
-    :authentication => 'login',
+    :domain => 'gmail.com',
+    :user_name => 'liveupwatch@gmail.com',
+    :password => 'liveup4785!Xn',
+    :authentication => :plain,
     :enable_starttls_auto => true
   }
 

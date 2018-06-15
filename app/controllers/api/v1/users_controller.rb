@@ -55,7 +55,7 @@ class Api::V1::UsersController < ApplicationController
 
     @user = User.new(user_params)
     if @user.save
-
+      UserMailer.with(user: @user).registration_confirmation.deliver_now
       begin
         gibbon
         .lists(ENV["MAILCHIMP_LIST_ID"])
