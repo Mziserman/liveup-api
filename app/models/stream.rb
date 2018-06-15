@@ -29,20 +29,13 @@ class Stream < ApplicationRecord
   end
 
 
-  after_update :create_archive
-  def create_archive
-    if self.live?
+  after_update :broadcast_state
+  def broadcast_state
+    if saved_change_to_state?
       ActionCable
         .server
-        .broadcast("stream_#{id}_stream_channel",
-          event: "live",
-          live: true)
-    elsif !self.live?
-      ActionCable
-        .server
-        .broadcast("stream_#{id}_stream_channel",
-          event: "live",
-          live: false)
+        .broadcast("stream_#{id}_state_channel",
+          state: state)
     end
   end
 
