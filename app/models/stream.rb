@@ -1,5 +1,5 @@
 class Stream < ApplicationRecord
-  enum state: { creating: 0, live: 1, off: 2 }
+  enum state: { creating: 0, live: 1, off: 2, rediffusion: 3 }
 
   belongs_to :channel
 
@@ -28,6 +28,15 @@ class Stream < ApplicationRecord
     view_counts.create
   end
 
+
+  after_update :change_state
+  def change_state
+    if saved_change_to_archive_url? && saved_change_to_thumbnail? &&
+      self.archive_url.present? && self.thumbnail.present?
+      self.state = :rediffusion
+      self.save
+    end
+  end
 
   after_update :broadcast_state
   def broadcast_state
